@@ -20,13 +20,20 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 //       </>
 //    );
 // };
+
+
 const RootNavigator = () => {
    return (
       <>
          <StatusBar />
          <NavigationContainer>
-            <RootStack.Navigator screenOptions={{ headerShown: false }}>
-               <RootStack.Screen name='BottomTabsNavigator' component={BottomTabsNavigator} />
+            <RootStack.Navigator // initialRouteName='AddInspiration'
+            >
+               <RootStack.Screen
+                  options={{ headerShown: false }}
+                  name='BottomTabsNavigator'
+                  component={BottomTabsNavigator}
+               />
                <RootStack.Screen name='AddInspiration' component={AddInspiration} />
             </RootStack.Navigator>
          </NavigationContainer>

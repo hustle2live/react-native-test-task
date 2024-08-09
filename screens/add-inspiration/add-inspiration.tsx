@@ -3,12 +3,9 @@ import { BottomTabsNavigator } from '../../navigation/bottom-tabs-navigator';
 
 const AddInspiration: React.FC = () => {
    return (
-      <>
-         <View>
-            <Text>inspiration componetnt</Text>
-         </View>
-         {/* <BottomTabsNavigator /> */}
-      </>
+      <View>
+         <Text>inspiration componetnt</Text>
+      </View>
    );
 };
 
