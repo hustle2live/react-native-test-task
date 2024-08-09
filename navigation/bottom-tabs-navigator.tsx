@@ -1,15 +1,17 @@
-import { Text } from "react-native";
+import { Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Dashboard, Settings } from '../screens';
+import { AddInspiration, Dashboard, Settings } from '../screens';
 
-const BottomTabs = createBottomTabNavigator();
+const Tabs = createBottomTabNavigator();
 
 const BottomTabsNavigator = () => {
-    return (
-        // Add BottomTabs.Navigator here
-        <></>
-    )
-}
+   return (
+      <Tabs.Navigator>
+         <Tabs.Screen name='Home' component={Dashboard}></Tabs.Screen>
+         <Tabs.Screen name='Settings' component={Settings}></Tabs.Screen>
+      </Tabs.Navigator>
+   );
+};
 
 export { BottomTabsNavigator };
