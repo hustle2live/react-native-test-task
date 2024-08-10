@@ -8,24 +8,42 @@ import { useTheme } from '../hooks';
 
 const Tabs = createBottomTabNavigator();
 
-const TabButton = (props) => {
-   const colors = useTheme();
+type TProps = {
+   props: {
+      focused: boolean;
+      color: string;
+      size: number;
+      name?: any;
+      primaryColor: string | undefined;
+      secondaryColor: string | undefined;
+   };
+};
 
-   const { name, focused } = props;
-   // const focused = accessibilityState.focused;
-
-   return <Ionicons name={name} color={focused ? colors?.theme.PRIMARY : colors?.theme.SECONDARY} />;
+const TabButton = ({ props }: TProps) => {
+   const { name, focused, primaryColor, secondaryColor } = props;
+   return <Ionicons name={name} size={16} color={focused ? primaryColor : secondaryColor} />;
 };
 
 const BottomTabsNavigator = () => {
+   const colors = useTheme();
+   const tabBackground = colors?.theme.APP_BACKGROUND;
+   const primaryColor = colors?.theme.PRIMARY;
+   const secondaryColor = colors?.theme.SECONDARY;
+
    return (
-      <Tabs.Navigator>
+      <Tabs.Navigator
+         screenOptions={{
+            tabBarStyle: { backgroundColor: tabBackground },
+            tabBarActiveTintColor: primaryColor,
+            tabBarInactiveTintColor: secondaryColor
+         }}
+      >
          <Tabs.Screen
             name='Dashboard'
             component={Dashboard}
             options={{
                tabBarLabelPosition: 'below-icon',
-               tabBarIcon: (props) => <TabButton name='home' props={props} />
+               tabBarIcon: (props) => <TabButton props={{ name: 'home', primaryColor, secondaryColor, ...props }} />
             }}
          ></Tabs.Screen>
          <Tabs.Screen
@@ -33,7 +51,7 @@ const BottomTabsNavigator = () => {
             component={Settings}
             options={{
                tabBarLabelPosition: 'below-icon',
-               tabBarIcon: (props) => <TabButton name='settings' props={props} />
+               tabBarIcon: (props) => <TabButton props={{ name: 'settings', primaryColor, secondaryColor, ...props }} />
             }}
          ></Tabs.Screen>
       </Tabs.Navigator>
