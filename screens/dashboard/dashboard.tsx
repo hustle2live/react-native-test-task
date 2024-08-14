@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-
+// { navigation, route }
 const Dashboard: React.FC = () => {
    return (
       <>

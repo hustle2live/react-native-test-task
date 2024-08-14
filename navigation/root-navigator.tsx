@@ -7,34 +7,35 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { BottomTabsNavigator } from './bottom-tabs-navigator';
 import { RootStackParamList } from '../types';
 import { AddInspiration, Dashboard, Settings } from '../screens';
+import { ROUTE_NAME } from '../enums';
+
+import { useTheme } from '../hooks';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
-// const RootNavigator = () => {
-//    return (
-//       <>
-//          <StatusBar />
-//          <NavigationContainer>
-//             <BottomTabsNavigator />
-//          </NavigationContainer>
-//       </>
-//    );
-// };
-
-
 const RootNavigator = () => {
+   const themeContext = useTheme();
+   const themeFonts = themeContext?.fonts;
+
    return (
       <>
          <StatusBar />
          <NavigationContainer>
-            <RootStack.Navigator // initialRouteName='AddInspiration'
+            <RootStack.Navigator
+               initialRouteName='BottomTabsNavigator'
+               screenOptions={{
+                  headerStyle: {
+                     backgroundColor: 'white'
+                  },
+                  headerTitleStyle: { fontFamily: themeFonts?.LobsterRegular.fontFamily }
+               }}
             >
                <RootStack.Screen
-                  options={{ headerShown: false }}
-                  name='BottomTabsNavigator'
+                  // options={{ headerShown: false }}
+                  name={ROUTE_NAME.BOTTOM_TABS_NAVIGATOR}
                   component={BottomTabsNavigator}
                />
-               <RootStack.Screen name='AddInspiration' component={AddInspiration} />
+               <RootStack.Screen name={ROUTE_NAME.ADD_INSPIRATION} component={AddInspiration} />
             </RootStack.Navigator>
          </NavigationContainer>
       </>

@@ -2,10 +2,11 @@ import * as React from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { AddInspiration, Dashboard, Settings } from '../screens';
+import { Dashboard, Settings } from '../screens';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../hooks';
 import { FontStyleType } from '../contexts/theme-context';
+import { ROUTE_NAME } from '../enums';
 
 const Tabs = createBottomTabNavigator();
 
@@ -48,7 +49,7 @@ const BottomTabsNavigator = () => {
          }}
       >
          <Tabs.Screen
-            name='Dashboard'
+            name={ROUTE_NAME.DASHBOARD}
             component={Dashboard}
             options={{
                tabBarLabelStyle: { fontFamily: themeFonts?.LobsterRegular.fontFamily, fontSize: 13, fontWeight: 400 },
@@ -59,7 +60,7 @@ const BottomTabsNavigator = () => {
             }}
          ></Tabs.Screen>
          <Tabs.Screen
-            name='Settings'
+            name={ROUTE_NAME.SETTINGS}
             component={Settings}
             options={{
                tabBarLabelStyle: { fontFamily: themeFonts?.LobsterRegular.fontFamily, fontSize: 13, fontWeight: 400 },
