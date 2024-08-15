@@ -8,24 +8,26 @@ import { useTheme } from '../hooks';
 import { FontStyleType } from '../contexts/theme-context';
 import { ROUTE_NAME } from '../enums';
 import { BottomTabsParamList, RootStackScreenProps } from '../types';
+import { AccessibilityInfo, Button, Touchable } from 'react-native';
+import { Link } from '@react-navigation/native';
 
 const Tabs = createBottomTabNavigator<BottomTabsParamList>();
 
 type TProps = {
    props: {
-      focused: boolean;
-      color: string;
-      size: number;
+      focused?: boolean;
+      color?: string;
+      size?: number;
       name?: any;
-      primaryColor: string | undefined;
-      secondaryColor: string | undefined;
-      themeFonts: FontStyleType | undefined;
+      primaryColor?: string;
+      secondaryColor?: string;
+      themeFonts?: FontStyleType;
    };
 };
 
 const TabButton = ({ props }: TProps) => {
-   const { name, focused, primaryColor, secondaryColor } = props;
-   return <Ionicons name={name} size={20} color={focused ? primaryColor : secondaryColor} />;
+   const { name, focused, primaryColor, secondaryColor, size } = props;
+   return <Ionicons name={name} size={size} color={focused ? primaryColor : secondaryColor} />;
 };
 
 type Props = RootStackScreenProps<'BottomTabsNavigator'>;
@@ -62,7 +64,14 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                tabBarLabelStyle: { fontFamily: themeFonts?.LobsterRegular.fontFamily, fontSize: 13, fontWeight: 400 },
                tabBarLabelPosition: 'below-icon',
                tabBarIcon: (props) => (
-                  <TabButton props={{ name: 'home', primaryColor, secondaryColor, themeFonts, ...props }} />
+                  <TabButton props={{ ...props, name: 'home', size: 20, primaryColor, secondaryColor, themeFonts }} />
+               ),
+               headerRight: (props) => (
+                  <Link to={{ screen: 'AddInspiration' }}>
+                     <TabButton
+                        props={{ ...props, name: 'add-circle', size: 32, primaryColor, secondaryColor, themeFonts }}
+                     />
+                  </Link>
                )
             }}
          ></Tabs.Screen>
@@ -73,7 +82,9 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                tabBarLabelStyle: { fontFamily: themeFonts?.LobsterRegular.fontFamily, fontSize: 13, fontWeight: 400 },
                tabBarLabelPosition: 'below-icon',
                tabBarIcon: (props) => (
-                  <TabButton props={{ name: 'settings', primaryColor, secondaryColor, themeFonts, ...props }} />
+                  <TabButton
+                     props={{ ...props, name: 'settings', size: 20, primaryColor, secondaryColor, themeFonts }}
+                  />
                )
             }}
          ></Tabs.Screen>

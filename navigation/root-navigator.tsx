@@ -31,7 +31,7 @@ const RootNavigator = () => {
                }}
             >
                <RootStack.Screen
-                  // options={{ headerShown: false }}
+                  options={{ headerShown: false }}
                   name={ROUTE_NAME.BOTTOM_TABS_NAVIGATOR}
                   component={BottomTabsNavigator}
                />
