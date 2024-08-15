@@ -27,7 +27,7 @@ type TProps = {
 
 const TabButton = ({ props }: TProps) => {
    const { name, focused, primaryColor, secondaryColor, size } = props;
-   return <Ionicons name={name} size={size} color={focused ? primaryColor : secondaryColor} />;
+   return <Ionicons name={name} size={size} color={props.color ?? focused ? primaryColor : secondaryColor} />;
 };
 
 type Props = RootStackScreenProps<'BottomTabsNavigator'>;
@@ -53,7 +53,10 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                height: 50
             },
             tabBarActiveTintColor: primaryColor,
-            tabBarInactiveTintColor: secondaryColor
+            tabBarInactiveTintColor: secondaryColor,
+            headerTitleStyle: {
+               fontFamily: themeFonts?.LobsterRegular.fontFamily
+            }
          }}
       >
          <Tabs.Screen
@@ -68,11 +71,12 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                ),
                headerRight: (props) => (
                   <Link to={{ screen: 'AddInspiration' }}>
-                     <TabButton
-                        props={{ ...props, name: 'add-circle', size: 32, primaryColor, secondaryColor, themeFonts }}
-                     />
+                     <Ionicons name='add-circle' size={32} color={primaryColor} />
                   </Link>
-               )
+               ),
+               headerStyle: {
+                  backgroundColor: tabBackground
+               }
             }}
          ></Tabs.Screen>
          <Tabs.Screen
@@ -85,7 +89,10 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                   <TabButton
                      props={{ ...props, name: 'settings', size: 20, primaryColor, secondaryColor, themeFonts }}
                   />
-               )
+               ),
+               headerStyle: {
+                  backgroundColor: tabBackground
+               }
             }}
          ></Tabs.Screen>
       </Tabs.Navigator>

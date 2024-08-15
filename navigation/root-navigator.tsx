@@ -25,9 +25,11 @@ const RootNavigator = () => {
                initialRouteName='BottomTabsNavigator'
                screenOptions={{
                   headerStyle: {
-                     backgroundColor: 'white'
+                     backgroundColor: themeContext?.theme.APP_BACKGROUND
                   },
-                  headerTitleStyle: { fontFamily: themeFonts?.LobsterRegular.fontFamily }
+                  headerTitleStyle: {
+                     fontFamily: themeFonts?.LobsterRegular.fontFamily
+                  }
                }}
             >
                <RootStack.Screen
