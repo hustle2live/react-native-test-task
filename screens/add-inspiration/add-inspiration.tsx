@@ -1,15 +1,11 @@
+import React from 'react';
 import { Text, View, Button } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import {
-   AddInspirationParamList,
-   AddInspirationProps,
-   AddInspirationScreenProps,
-   RootStackParamList,
-   RootStackScreenProps
-} from '../../types/navigation.type';
+import { AddInspirationParamList, RootStackParamList } from '../../types/navigation.type';
 
 type Props = NativeStackScreenProps<AddInspirationParamList, 'AddInspiration'>;
+// type Props = NativeStackScreenProps<RootStackParamList, 'BottomTabsNavigator'>;
 
 const AddInspiration: React.FC<Props> = ({ navigation, route }: Props) => {
    return (

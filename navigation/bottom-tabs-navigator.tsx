@@ -7,8 +7,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../hooks';
 import { FontStyleType } from '../contexts/theme-context';
 import { ROUTE_NAME } from '../enums';
+import { BottomTabsParamList, RootStackScreenProps } from '../types';
 
-const Tabs = createBottomTabNavigator();
+const Tabs = createBottomTabNavigator<BottomTabsParamList>();
 
 type TProps = {
    props: {
@@ -27,12 +28,17 @@ const TabButton = ({ props }: TProps) => {
    return <Ionicons name={name} size={20} color={focused ? primaryColor : secondaryColor} />;
 };
 
-const BottomTabsNavigator = () => {
+type Props = RootStackScreenProps<'BottomTabsNavigator'>;
+// type Props = NativeStackScreenProps<RootStackParamList, 'BottomTabsNavigator'>;
+
+const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX.Element => {
    const themeContext = useTheme();
    const tabBackground = themeContext?.theme.APP_BACKGROUND;
    const primaryColor = themeContext?.theme.PRIMARY;
    const secondaryColor = themeContext?.theme.SECONDARY;
    const themeFonts = themeContext?.fonts ?? undefined;
+
+   const goToAddInspiration = () => navigation.navigate('AddInspiration');
 
    return (
       <Tabs.Navigator
@@ -51,6 +57,7 @@ const BottomTabsNavigator = () => {
          <Tabs.Screen
             name={ROUTE_NAME.DASHBOARD}
             component={Dashboard}
+            initialParams={{ onpress: goToAddInspiration }}
             options={{
                tabBarLabelStyle: { fontFamily: themeFonts?.LobsterRegular.fontFamily, fontSize: 13, fontWeight: 400 },
                tabBarLabelPosition: 'below-icon',

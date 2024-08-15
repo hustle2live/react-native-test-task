@@ -16,6 +16,7 @@ type BottomTabsParamList = {
    [ROUTE_NAME.DASHBOARD]:
       | {
            inspiration?: Inspiration;
+           onpress: () => void;
         }
       | undefined;
    [ROUTE_NAME.SETTINGS]: undefined;
@@ -33,6 +34,11 @@ type AddInspirationProps = NativeStackScreenProps<AddInspirationParamList, 'AddI
 type AddInspirationParamList = {
    [ROUTE_NAME.BOTTOM_TABS_NAVIGATOR]: undefined;
    [ROUTE_NAME.ADD_INSPIRATION]: undefined;
+};
+
+type DashboardParamList = {
+   [ROUTE_NAME.ADD_INSPIRATION]: undefined;
+   [ROUTE_NAME.DASHBOARD]: undefined;
 };
 
 type AddInspirationScreenProps<T extends keyof AddInspirationParamList> = NativeStackScreenProps<
@@ -55,5 +61,6 @@ export type {
    BottomTabsScreenProps,
    AddInspirationProps,
    AddInspirationParamList,
-   AddInspirationScreenProps
+   AddInspirationScreenProps,
+   DashboardParamList
 };
