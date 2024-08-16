@@ -6,57 +6,53 @@ import { ScreenBackground } from '../screen-background/screen-background';
 type Props = BottomTabsScreenProps<'Dashboard'>;
 
 const Dashboard: React.FC<Props> = ({ navigation, route }: Props) => {
-   const imageSrcMain: { uri: string } = { uri: '../../assets/empty-placeholder.png' };
+   const imageSource: { uri: string } = { uri: '../../assets/empty-placeholder.png' };
 
-   console.log('font : ', { ...route.params });
-
-   const textStyles = StyleSheet.create({
-      text: {
+   const styles = StyleSheet.create({
+      textStyles: {
          fontFamily: route.params?.font,
          fontSize: 20,
-         fontWeight: 'bold',
-         color: 'brown'
-      }
+         fontWeight: 400,
+         color: route.params?.colors?.secondary
+      },
+      viewStyles: {
+         minWidth: '100%',
+         minHeight: '100%',
+         display: 'flex',
+         alignItems: 'center',
+         justifyContent: 'center'
+      },
+      imageContainerStyles: {
+         alignSelf: 'center',
+         justifyContent: 'center',
+         width: '80%',
+         height: 200
+      },
+      imageNestedStyles: { width: '100%', height: 'auto' }
    });
 
    return (
-      <View
-         style={{
-            minWidth: '100%',
-            minHeight: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            alignContent: 'center'
-         }}
-      >
+      <View style={styles.viewStyles}>
          <ScreenBackground />
-         <ImageBackground
-            source={imageSrcMain}
-            width={100}
-            style={{
-               alignSelf: 'center',
-               justifyContent: 'center',
-               margin: 'auto',
-               width: '80%',
-               height: 200
-            }}
-            imageStyle={{ width: '100%', height: 'auto' }}
-         />
-         <Text style={textStyles.text}>No inspirations yet</Text>
+         <View style={styles.viewStyles}>
+            <ImageBackground
+               source={imageSource}
+               style={styles.imageContainerStyles}
+               imageStyle={styles.imageNestedStyles}
+            />
+            <Text style={styles.textStyles}>No inspirations yet</Text>
+         </View>
       </View>
    );
 };
 
-{
-   /* <Pressable style={buttonStyles.button} onPress={route.params?.onpress}>
+/* <Pressable style={buttonStyles.button} onPress={route.params?.onpress}>
 <Text style={buttonStyles.text}>Go to AddInspiration</Text>
 </Pressable>
 <Text>
 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas perferendis error minus, sed accusamus
 quam! Voluptate quasi hic quod at consequuntur assumenda id esse corrupti vel? Enim earum mollitia nisi.
 </Text> */
-}
 
 // const buttonStyles = StyleSheet.create({
 //    button: {

@@ -58,7 +58,11 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
          <Tabs.Screen
             name={ROUTE_NAME.DASHBOARD}
             component={Dashboard}
-            initialParams={{ onpress: goToAddInspiration, font: themeFonts?.LobsterItalic.fontFamily }}
+            initialParams={{
+               onpress: goToAddInspiration,
+               colors: { primary: primaryColor, secondary: secondaryColor },
+               font: themeFonts?.LobsterItalic.fontFamily
+            }}
             options={{
                tabBarLabelStyle: { fontFamily: themeFonts?.LobsterRegular.fontFamily, fontSize: 13, fontWeight: 400 },
                tabBarLabelPosition: 'below-icon',

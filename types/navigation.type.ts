@@ -17,7 +17,8 @@ type BottomTabsParamList = {
       | {
            inspiration?: Inspiration;
            font?: string | undefined;
-           onpress: () => void;
+           colors?: { primary: string | undefined; secondary: string | undefined };
+           onpress?: () => void;
         }
       | undefined;
    [ROUTE_NAME.SETTINGS]: undefined;
