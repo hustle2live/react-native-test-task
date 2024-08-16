@@ -4,11 +4,14 @@ import { Button, Text, View, ViewStyle } from 'react-native';
 
 import { BottomTabsScreenProps } from '../../types/navigation.type';
 
+import { ScreenBackground } from '../screen-background/screen-background';
+
 type Props = BottomTabsScreenProps<'Dashboard'>;
 
 const Dashboard: React.FC<Props> = ({ navigation, route }: Props) => {
    return (
-      <View>
+      <View style={{ minWidth: '100%', minHeight: '100%', position: 'relative' }}>
+         <ScreenBackground />
          <Text>There's will be a dashboard</Text>
          <Text>- - - -- - - - - -- - - - - - -- - -</Text>
          <Button title='Go to AddInspiration' onPress={route.params?.onpress} />
