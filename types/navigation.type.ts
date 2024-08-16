@@ -16,6 +16,7 @@ type BottomTabsParamList = {
    [ROUTE_NAME.DASHBOARD]:
       | {
            inspiration?: Inspiration;
+           font?: string | undefined;
            onpress: () => void;
         }
       | undefined;
@@ -64,4 +65,3 @@ export type {
    AddInspirationScreenProps,
    DashboardParamList
 };
-

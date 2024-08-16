@@ -1,21 +1,20 @@
 import * as React from 'react';
-
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { BottomTabsNavigator } from './bottom-tabs-navigator';
+
 import { RootStackParamList } from '../types';
 import { AddInspiration } from '../screens';
 import { ROUTE_NAME } from '../enums';
-
 import { useTheme } from '../hooks';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
    const themeContext = useTheme();
-   const themeFonts = themeContext?.fonts;
+   const fontPrimary = themeContext?.fonts?.LobsterRegular.fontFamily;
 
    return (
       <>
@@ -28,7 +27,7 @@ const RootNavigator = () => {
                      backgroundColor: themeContext?.theme.APP_BACKGROUND
                   },
                   headerTitleStyle: {
-                     fontFamily: themeFonts?.LobsterRegular.fontFamily
+                     fontFamily: fontPrimary
                   }
                }}
             >

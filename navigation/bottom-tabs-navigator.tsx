@@ -52,15 +52,13 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
             },
             tabBarActiveTintColor: primaryColor,
             tabBarInactiveTintColor: secondaryColor,
-            headerTitleStyle: {
-               fontFamily: themeFonts?.LobsterRegular.fontFamily
-            }
+            headerTitleStyle: { fontFamily: themeFonts?.LobsterRegular.fontFamily }
          }}
       >
          <Tabs.Screen
             name={ROUTE_NAME.DASHBOARD}
             component={Dashboard}
-            initialParams={{ onpress: goToAddInspiration }}
+            initialParams={{ onpress: goToAddInspiration, font: themeFonts?.LobsterItalic.fontFamily }}
             options={{
                tabBarLabelStyle: { fontFamily: themeFonts?.LobsterRegular.fontFamily, fontSize: 13, fontWeight: 400 },
                tabBarLabelPosition: 'below-icon',
@@ -79,6 +77,7 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                }
             }}
          ></Tabs.Screen>
+
          <Tabs.Screen
             name={ROUTE_NAME.SETTINGS}
             component={Settings}

@@ -20,34 +20,31 @@ interface ThemeContextProps {
    fonts: FontStyleType | null;
 }
 
+const fontStyles: FontStyleType = StyleSheet.create({
+   LobsterItalic: {
+      fontSize: 20,
+      fontFamily: 'LobsterTwo-Italic'
+   },
+   LobsterRegular: {
+      fontSize: 20,
+      fontFamily: 'LobsterTwo-Regular'
+   }
+});
+
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
    const [theme, setTheme] = useState<ThemeType>(COLORS_LIGHT);
-   const [fonts, setFonts] = useState<FontStyleType | null>(null);
 
-   const [fontsLoaded, error] = useFonts({
-      'LobsterTwo-Italic': require('../assets/fonts/LobsterTwo-Italic.otf'),
-      'LobsterTwo-Regular': require('../assets/fonts/LobsterTwo-Regular.otf')
-   });
-
-   useEffect(() => {
-      if (!error) {
-         const fontStyles: FontStyleType = StyleSheet.create({
-            LobsterItalic: {
-               fontSize: 20,
-               fontFamily: 'LobsterTwo-Italic'
-            },
-            LobsterRegular: {
-               fontSize: 20,
-               fontFamily: 'LobsterTwo-Regular'
-            }
-         });
-         // loading fonts use state function ...
-         console.log('fonts loaded');
-         setFonts(fontStyles);
-      }
-   }, []);
+   try {
+      const [fontsLoaded, error] = useFonts({
+         'LobsterTwo-Italic': require('../assets/fonts/LobsterTwo-Italic.otf'),
+         'LobsterTwo-Regular': require('../assets/fonts/LobsterTwo-Regular.otf')
+      });
+      if (!fontsLoaded && error) throw new Error(error.message);
+   } catch (error) {
+      console.log(error);
+   }
 
    // Add logic to retrieve theme from AsyncStorage here
 
@@ -67,7 +64,7 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       theme === COLORS_LIGHT ? setTheme(COLORS_DARK) : setTheme(COLORS_LIGHT);
    };
 
-   return <ThemeContext.Provider value={{ theme, toggleTheme, fonts }}>{children}</ThemeContext.Provider>;
+   return <ThemeContext.Provider value={{ theme, toggleTheme, fonts: fontStyles }}>{children}</ThemeContext.Provider>;
 };
 
 export { ThemeProvider, ThemeContext, type FontStyleType };
