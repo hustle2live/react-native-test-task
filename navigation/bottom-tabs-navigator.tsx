@@ -8,7 +8,6 @@ import { useTheme } from '../hooks';
 import { FontStyleType } from '../contexts/theme-context';
 import { ROUTE_NAME } from '../enums';
 import { BottomTabsParamList, RootStackScreenProps } from '../types';
-import { AccessibilityInfo, Button, Touchable } from 'react-native';
 import { Link } from '@react-navigation/native';
 
 const Tabs = createBottomTabNavigator<BottomTabsParamList>();
@@ -27,11 +26,10 @@ type TProps = {
 
 const TabButton = ({ props }: TProps) => {
    const { name, focused, primaryColor, secondaryColor, size } = props;
-   return <Ionicons name={name} size={size} color={props.color ?? focused ? primaryColor : secondaryColor} />;
+   return <Ionicons name={name} size={size} color={!focused ? secondaryColor : primaryColor} />;
 };
 
 type Props = RootStackScreenProps<'BottomTabsNavigator'>;
-// type Props = NativeStackScreenProps<RootStackParamList, 'BottomTabsNavigator'>;
 
 const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX.Element => {
    const themeContext = useTheme();
@@ -74,8 +72,10 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                      <Ionicons name='add-circle' size={32} color={primaryColor} />
                   </Link>
                ),
+               headerRightContainerStyle: { paddingRight: 10 },
                headerStyle: {
-                  backgroundColor: tabBackground
+                  backgroundColor: tabBackground,
+                  height: 46
                }
             }}
          ></Tabs.Screen>
@@ -91,7 +91,8 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                   />
                ),
                headerStyle: {
-                  backgroundColor: tabBackground
+                  backgroundColor: tabBackground,
+                  height: 46
                }
             }}
          ></Tabs.Screen>

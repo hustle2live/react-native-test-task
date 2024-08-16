@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { BottomTabsNavigator } from './bottom-tabs-navigator';
 import { RootStackParamList } from '../types';
-import { AddInspiration, Dashboard, Settings } from '../screens';
+import { AddInspiration } from '../screens';
 import { ROUTE_NAME } from '../enums';
 
 import { useTheme } from '../hooks';
@@ -37,7 +37,13 @@ const RootNavigator = () => {
                   name={ROUTE_NAME.BOTTOM_TABS_NAVIGATOR}
                   component={BottomTabsNavigator}
                />
-               <RootStack.Screen name={ROUTE_NAME.ADD_INSPIRATION} component={AddInspiration} />
+               <RootStack.Screen
+                  name={ROUTE_NAME.ADD_INSPIRATION}
+                  component={AddInspiration}
+                  options={{
+                     headerStyle: { backgroundColor: themeContext?.theme.APP_BACKGROUND, height: 46 }
+                  }}
+               />
             </RootStack.Navigator>
          </NavigationContainer>
       </>
