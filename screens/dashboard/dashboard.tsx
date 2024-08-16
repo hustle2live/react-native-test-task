@@ -10,7 +10,7 @@ type Props = BottomTabsScreenProps<'Dashboard'>;
 
 const Dashboard: React.FC<Props> = ({ navigation, route }: Props) => {
    return (
-      <View style={{ minWidth: '100%', minHeight: '100%', position: 'relative' }}>
+      <View style={{ minWidth: '100%', minHeight: '100%' }}>
          <ScreenBackground />
          <Text>There's will be a dashboard</Text>
          <Text>- - - -- - - - - -- - - - - - -- - -</Text>
