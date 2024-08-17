@@ -1,4 +1,7 @@
-import { Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, ImageBackground, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
 import { ScreenBackground } from '../screen-background/screen-background';
 
 const Settings: React.FC = () => {

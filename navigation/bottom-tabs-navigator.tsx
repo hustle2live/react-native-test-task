@@ -78,7 +78,8 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                headerStyle: {
                   backgroundColor: tabBackground,
                   height: 46
-               }
+               },
+               headerTitle: 'Find Your Inspiration'
             }}
          ></Tabs.Screen>
 
