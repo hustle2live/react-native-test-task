@@ -103,5 +103,3 @@ const AddInspiration: React.FC<Props> = ({ navigation, route }: Props) => {
 };
 
 export { AddInspiration };
-
-/*   onPress={() => navigation.navigate('BottomTabsNavigator')} /> */

@@ -21,9 +21,6 @@ const RootNavigator = () => {
    const themeColors = themeContext?.theme;
    const themeFonts = themeContext?.fonts;
 
-   const primary = themeContext?.theme.PRIMARY ?? '#660014';
-   const secondary = themeContext?.theme.SECONDARY ?? '#e8caa2';
-
    const screenStyles = StyleSheet.create({
       headerStyle: {
          backgroundColor: themeContext?.theme.APP_BACKGROUND

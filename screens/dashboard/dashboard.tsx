@@ -8,14 +8,14 @@ type Props = BottomTabsScreenProps<'Dashboard'>;
 const Dashboard: React.FC<Props> = ({ navigation, route }: Props) => {
    const imageSource: { uri: string } = { uri: '../../assets/empty-placeholder.png' };
 
-   const fontPrimary = route.params?.fonts.LobsterItalic.fontFamily;
+   const fontPrimary = route.params.fonts?.LobsterItalic.fontFamily;
 
    const styles = StyleSheet.create({
       textStyles: {
          fontFamily: fontPrimary,
          fontSize: 20,
          fontWeight: 400,
-         color: route.params?.colors.secondary
+         color: route.params.colors?.SECONDARY
       },
       viewStyles: {
          minWidth: '100%',

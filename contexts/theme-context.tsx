@@ -62,10 +62,14 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
    // Add logic to toggle theme here
 
    const toggleTheme = async () => {
-      theme === COLORS_LIGHT ? setTheme(COLORS_DARK) : setTheme(COLORS_LIGHT);
+      const newTheme = theme === COLORS_LIGHT ? COLORS_DARK : COLORS_LIGHT;
+      setTheme(newTheme);
+      console.log('switch-theme');
    };
 
-   return <ThemeContext.Provider value={{ theme, toggleTheme, fonts: fontStyles }}>{children}</ThemeContext.Provider>;
+   const themeProps = { theme, toggleTheme, fonts: fontStyles };
+
+   return <ThemeContext.Provider value={themeProps}>{children}</ThemeContext.Provider>;
 };
 
 export { ThemeProvider, ThemeContext, type FontStyleType, type ThemeContextProps, type ThemeType };

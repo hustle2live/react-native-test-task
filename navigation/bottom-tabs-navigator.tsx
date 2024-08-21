@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useCallback } from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -33,13 +33,14 @@ type Props = RootStackScreenProps<'BottomTabsNavigator'>;
 
 const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX.Element => {
    const themeContext = useTheme();
-
-   const tabBackground = themeContext?.theme.APP_BACKGROUND;
-   const primaryColor = themeContext?.theme.PRIMARY ?? '#660014';
-   const secondaryColor = themeContext?.theme.SECONDARY ?? '#e8caa2';
+   const themeColors = themeContext?.theme;
    const themeFonts = themeContext?.fonts;
-   const LobsterRegular = themeContext?.fonts.LobsterRegular.fontFamily;
-   const LobsterItalic = themeContext?.fonts.LobsterItalic.fontFamily;
+
+   const tabBackground = themeColors?.APP_BACKGROUND;
+   const primaryColor = themeColors?.PRIMARY ?? '#660014';
+   const secondaryColor = themeColors?.SECONDARY ?? '#e8caa2';
+   const LobsterRegular = themeFonts?.LobsterRegular.fontFamily;
+   // const LobsterItalic = themeFonts?.LobsterItalic.fontFamily;
 
    const goToAddInspiration = () => navigation.navigate('AddInspiration');
 
@@ -63,7 +64,7 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
             component={Dashboard}
             initialParams={{
                onpress: goToAddInspiration,
-               colors: { primary: primaryColor, secondary: secondaryColor },
+               colors: themeColors,
                fonts: themeFonts
             }}
             options={{
@@ -88,7 +89,10 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
 
          <Tabs.Screen
             name={ROUTE_NAME.SETTINGS}
-            component={Settings}
+            initialParams={{
+               colors: themeColors,
+               fonts: themeFonts
+            }}
             options={{
                tabBarLabelStyle: { fontFamily: LobsterRegular, fontSize: 13, fontWeight: 400 },
                tabBarLabelPosition: 'below-icon',
@@ -102,7 +106,9 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                   height: 46
                }
             }}
-         ></Tabs.Screen>
+         >
+            {(props) => <Settings {...props} onChangeTheme={() => themeContext?.toggleTheme()} />}
+         </Tabs.Screen>
       </Tabs.Navigator>
    );
 };
