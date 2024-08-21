@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { ScreenBackground } from '../screen-background/screen-background';
 import { BottomTabsParamList } from '../../types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { COLORS_LIGHT } from '../../constants';
 
 type ThemeProp = {
    onChangeTheme: () => void;
@@ -17,13 +18,15 @@ const POSITIONS = {
    RIGHT: '50%'
 } as const;
 
-type TSwitch = (typeof POSITIONS)[keyof typeof POSITIONS];
+type SwitcherPositionX = (typeof POSITIONS)[keyof typeof POSITIONS];
 
 const Settings: React.FC<Props> = ({ route, onChangeTheme }: Props) => {
-   const { LEFT, RIGHT } = POSITIONS;
    const { colors } = route.params;
+   const isLight = colors === COLORS_LIGHT;
 
-   const [switchPosition, setSwitchPosition] = useState<TSwitch>(LEFT);
+   const initialSwitcherPositionX = isLight ? POSITIONS.LEFT : POSITIONS.RIGHT;
+
+   const [switcher, setSwitcher] = useState<SwitcherPositionX>(initialSwitcherPositionX);
 
    const styles = StyleSheet.create({
       container: {
@@ -36,23 +39,26 @@ const Settings: React.FC<Props> = ({ route, onChangeTheme }: Props) => {
       },
       switchLine: {
          position: 'relative',
-         backgroundColor: colors?.GREY,
+         backgroundColor: isLight ? colors?.SECONDARY : colors?.APP_BACKGROUND,
          width: 38,
          height: 15,
          transform: 'all ease-in 1000'
       },
       switchCircle: {
          position: 'absolute',
+         backgroundColor: colors?.PRIMARY,
+         width: 30,
+         height: 30,
+         borderRadius: 30,
          left: 0,
          top: 7,
-         transform: [{ translateX: switchPosition }, { translateY: '-50%' }]
+         transform: [{ translateX: switcher }, { translateY: '-50%' }]
       }
    });
 
    const handleSwitchTheme = (): void => {
-      console.log('1. - switch!..');
-      const newPosition = switchPosition === LEFT ? RIGHT : LEFT;
-      setSwitchPosition(newPosition);
+      const move = switcher === POSITIONS.LEFT ? POSITIONS.RIGHT : POSITIONS.LEFT;
+      setSwitcher(move);
       onChangeTheme();
    };
 
