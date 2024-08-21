@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Dashboard, Settings } from '../screens';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../hooks';
-import { FontStyleType } from '../contexts/theme-context';
+import { FontStyleType, ThemeContextProps } from '../contexts/theme-context';
 import { ROUTE_NAME } from '../enums';
 import { BottomTabsParamList, RootStackScreenProps } from '../types';
 import { Link } from '@react-navigation/native';
@@ -33,10 +33,13 @@ type Props = RootStackScreenProps<'BottomTabsNavigator'>;
 
 const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX.Element => {
    const themeContext = useTheme();
+
    const tabBackground = themeContext?.theme.APP_BACKGROUND;
-   const primaryColor = themeContext?.theme.PRIMARY;
-   const secondaryColor = themeContext?.theme.SECONDARY;
-   const themeFonts = themeContext?.fonts ?? undefined;
+   const primaryColor = themeContext?.theme.PRIMARY ?? '#660014';
+   const secondaryColor = themeContext?.theme.SECONDARY ?? '#e8caa2';
+   const themeFonts = themeContext?.fonts;
+   const LobsterRegular = themeContext?.fonts.LobsterRegular.fontFamily;
+   const LobsterItalic = themeContext?.fonts.LobsterItalic.fontFamily;
 
    const goToAddInspiration = () => navigation.navigate('AddInspiration');
 
@@ -52,7 +55,7 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
             },
             tabBarActiveTintColor: primaryColor,
             tabBarInactiveTintColor: secondaryColor,
-            headerTitleStyle: { fontFamily: themeFonts?.LobsterRegular.fontFamily }
+            headerTitleStyle: { fontFamily: LobsterRegular }
          }}
       >
          <Tabs.Screen
@@ -61,10 +64,10 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
             initialParams={{
                onpress: goToAddInspiration,
                colors: { primary: primaryColor, secondary: secondaryColor },
-               font: themeFonts?.LobsterItalic.fontFamily
+               fonts: themeFonts
             }}
             options={{
-               tabBarLabelStyle: { fontFamily: themeFonts?.LobsterRegular.fontFamily, fontSize: 13, fontWeight: 400 },
+               tabBarLabelStyle: { fontFamily: LobsterRegular, fontSize: 13, fontWeight: 400 },
                tabBarLabelPosition: 'below-icon',
                tabBarIcon: (props) => (
                   <TabButton props={{ ...props, name: 'home', size: 20, primaryColor, secondaryColor, themeFonts }} />
@@ -87,7 +90,7 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
             name={ROUTE_NAME.SETTINGS}
             component={Settings}
             options={{
-               tabBarLabelStyle: { fontFamily: themeFonts?.LobsterRegular.fontFamily, fontSize: 13, fontWeight: 400 },
+               tabBarLabelStyle: { fontFamily: LobsterRegular, fontSize: 13, fontWeight: 400 },
                tabBarLabelPosition: 'below-icon',
                tabBarIcon: (props) => (
                   <TabButton

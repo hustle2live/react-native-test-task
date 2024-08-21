@@ -1,33 +1,34 @@
 import React, { createContext, useState, useEffect, ReactNode, useMemo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { COLORS_LIGHT, COLORS_DARK } from '../constants';
+import { COLORS_LIGHT, COLORS_DARK, FONTS } from '../constants';
 import { StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 
 type ThemeType = typeof COLORS_LIGHT | typeof COLORS_DARK;
 
-interface FontStyleType {
-   [key: string]: {
+type FontStyleType = Record<
+   string,
+   {
       fontSize: number;
       fontFamily: string;
-   };
-}
+   }
+>;
 
 interface ThemeContextProps {
    theme: ThemeType;
    toggleTheme: () => void;
-   fonts: FontStyleType | null;
+   fonts: FontStyleType;
 }
 
 const fontStyles: FontStyleType = StyleSheet.create({
-   LobsterItalic: {
-      fontSize: 20,
-      fontFamily: 'LobsterTwo-Italic'
-   },
    LobsterRegular: {
       fontSize: 20,
-      fontFamily: 'LobsterTwo-Regular'
+      fontFamily: FONTS.LOBSTER_REGULAR
+   },
+   LobsterItalic: {
+      fontSize: 20,
+      fontFamily: FONTS.LOBSTER_ITALIC
    }
 });
 
@@ -38,8 +39,8 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
    try {
       const [fontsLoaded, error] = useFonts({
-         'LobsterTwo-Italic': require('../assets/fonts/LobsterTwo-Italic.otf'),
-         'LobsterTwo-Regular': require('../assets/fonts/LobsterTwo-Regular.otf')
+         [FONTS.LOBSTER_REGULAR]: require('../assets/fonts/LobsterTwo-Regular.otf'),
+         [FONTS.LOBSTER_ITALIC]: require('../assets/fonts/LobsterTwo-Italic.otf')
       });
       if (!fontsLoaded && error) throw new Error(error.message);
    } catch (error) {
@@ -67,4 +68,4 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
    return <ThemeContext.Provider value={{ theme, toggleTheme, fonts: fontStyles }}>{children}</ThemeContext.Provider>;
 };
 
-export { ThemeProvider, ThemeContext, type FontStyleType };
+export { ThemeProvider, ThemeContext, type FontStyleType, type ThemeContextProps, type ThemeType };

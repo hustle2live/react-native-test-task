@@ -4,23 +4,20 @@ import type { BottomTabScreenProps as RNBottomTabScreenProps } from '@react-navi
 
 import { ROUTE_NAME } from '../enums';
 import { Inspiration } from './inspiration.type';
+import { ThemeProps } from './props-styles.type';
 
 type NavigationRoute = (typeof ROUTE_NAME)[keyof typeof ROUTE_NAME];
 
 type RootStackParamList = {
-   [ROUTE_NAME.BOTTOM_TABS_NAVIGATOR]: NavigatorScreenParams<BottomTabsParamList>;
-   [ROUTE_NAME.ADD_INSPIRATION]: undefined;
+   [ROUTE_NAME.BOTTOM_TABS_NAVIGATOR]: NavigatorScreenParams<BottomTabsParamList> & Partial<ThemeProps>;
+   [ROUTE_NAME.ADD_INSPIRATION]: ThemeProps;
 };
 
 type BottomTabsParamList = {
-   [ROUTE_NAME.DASHBOARD]:
-      | {
-           inspiration?: Inspiration;
-           font?: string | undefined;
-           colors?: { primary: string | undefined; secondary: string | undefined };
-           onpress?: () => void;
-        }
-      | undefined;
+   [ROUTE_NAME.DASHBOARD]: ThemeProps & {
+      inspiration?: Inspiration;
+      onpress?: () => void;
+   };
    [ROUTE_NAME.SETTINGS]: undefined;
 };
 
