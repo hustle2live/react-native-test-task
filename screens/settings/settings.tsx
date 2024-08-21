@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Pressable, StyleSheet } from 'react-native';
+import { Animated, View, TouchableOpacity, Pressable, StyleSheet, Touchable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { ScreenBackground } from '../screen-background/screen-background';
@@ -42,11 +42,11 @@ const Settings: React.FC<Props> = ({ route, onChangeTheme }: Props) => {
          backgroundColor: isLight ? colors?.SECONDARY : colors?.APP_BACKGROUND,
          width: 38,
          height: 15,
-         transform: 'all ease-in 1000'
+         borderRadius: 10
       },
       switchCircle: {
          position: 'absolute',
-         backgroundColor: colors?.PRIMARY,
+         backgroundColor: isLight ? colors?.PRIMARY : colors?.GREY,
          width: 30,
          height: 30,
          borderRadius: 30,
