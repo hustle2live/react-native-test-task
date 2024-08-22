@@ -4,13 +4,12 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '../../types/navigation.type';
 import { ScreenBackground } from '../screen-background/screen-background';
+import { ThemeScreepProps } from '../../types/props-styles.type';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & Partial<ThemeScreepProps>;
 
-const AddInspiration: React.FC<Props> = ({ navigation, route }: Props) => {
+const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) => {
    const themeFonts = route.params.fonts;
-   const themeColors = route.params.colors;
-
    const imageSource: { uri: string } = { uri: '../../assets/no-image.jpg' };
 
    const buttonStyles = StyleSheet.create({
@@ -20,15 +19,15 @@ const AddInspiration: React.FC<Props> = ({ navigation, route }: Props) => {
          borderRadius: 6,
          borderWidth: 1,
          fontSize: 14,
-         fontFamily: themeFonts.LobsterRegular.fontFamily,
-         color: themeColors.PRIMARY,
-         borderColor: themeColors.PRIMARY,
-         backgroundColor: themeColors.APP_BACKGROUND,
+         fontFamily: themeFonts?.LobsterRegular.fontFamily,
+         color: colors?.PRIMARY,
+         borderColor: colors?.PRIMARY,
+         backgroundColor: colors?.APP_BACKGROUND,
          textAlign: 'center',
          alignItems: 'center',
          fontWeight: 400
       },
-      filled: { backgroundColor: themeColors.PRIMARY, color: themeColors.FONT_INVERSE },
+      filled: { backgroundColor: colors?.PRIMARY, color: colors?.FONT_INVERSE },
       halfSize: { flex: 1 },
       fullSize: { width: '100%' },
       text: {
@@ -44,7 +43,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route }: Props) => {
          height: 84,
          padding: 10,
          textAlign: 'left',
-         color: themeColors.FONT_MAIN,
+         color: colors?.FONT_MAIN,
          fontFamily: 'unset'
       }
    });

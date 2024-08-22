@@ -2,10 +2,11 @@ import React from 'react';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { BottomTabsScreenProps } from '../../types/navigation.type';
 import { ScreenBackground } from '../screen-background/screen-background';
+import { ThemeScreepProps } from '../../types/props-styles.type';
 
-type Props = BottomTabsScreenProps<'Dashboard'>;
+type Props = BottomTabsScreenProps<'Dashboard'> & Partial<ThemeScreepProps>;
 
-const Dashboard: React.FC<Props> = ({ navigation, route }: Props) => {
+const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
    const imageSource: { uri: string } = { uri: '../../assets/empty-placeholder.png' };
 
    const fontPrimary = route.params.fonts?.LobsterItalic.fontFamily;
@@ -15,7 +16,7 @@ const Dashboard: React.FC<Props> = ({ navigation, route }: Props) => {
          fontFamily: fontPrimary,
          fontSize: 20,
          fontWeight: 400,
-         color: route.params.colors?.SECONDARY
+         color: colors?.SECONDARY
       },
       viewStyles: {
          minWidth: '100%',

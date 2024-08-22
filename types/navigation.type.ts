@@ -4,17 +4,17 @@ import type { BottomTabScreenProps as RNBottomTabScreenProps } from '@react-navi
 
 import { ROUTE_NAME } from '../enums';
 import { Inspiration } from './inspiration.type';
-import { ThemeProps } from './props-styles.type';
+import { ThemeScreepProps } from './props-styles.type';
 
 type NavigationRoute = (typeof ROUTE_NAME)[keyof typeof ROUTE_NAME];
 
 type RootStackParamList = {
-   [ROUTE_NAME.BOTTOM_TABS_NAVIGATOR]: NavigatorScreenParams<BottomTabsParamList>;
-   [ROUTE_NAME.ADD_INSPIRATION]: ThemeProps;
+   [ROUTE_NAME.BOTTOM_TABS_NAVIGATOR]: NavigatorScreenParams<BottomTabsParamList> & Partial<ThemeScreepProps>;
+   [ROUTE_NAME.ADD_INSPIRATION]: Partial<ThemeScreepProps>;
 };
 
 type BottomTabsParamList = {
-   [ROUTE_NAME.DASHBOARD]: Partial<ThemeProps> & {
+   [ROUTE_NAME.DASHBOARD]: Pick<ThemeScreepProps, 'fonts'> & {
       inspiration?: Inspiration;
       onpress?: () => void;
    };

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { type ThemeProps } from '../../types/props-styles.type';
+import { type ThemeScreepProps } from '../../types/props-styles.type';
 import { COLORS_LIGHT } from '../../constants';
 
 import { ScreenBackground } from '../screen-background/screen-background';
@@ -12,8 +12,8 @@ const POSITIONS = {
    RIGHT: '50%'
 } as const;
 
-type SettingProps = Partial<ThemeProps> & {
-   onChangeTheme: () => void;
+type SettingProps = Pick<ThemeScreepProps, 'colors'> & {
+   onChangeTheme: () => void | undefined;
 };
 
 type SwitcherPositionX = (typeof POSITIONS)[keyof typeof POSITIONS];
@@ -56,6 +56,9 @@ const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProp
    const handleSwitchTheme = (): void => {
       const move = switcher === POSITIONS.LEFT ? POSITIONS.RIGHT : POSITIONS.LEFT;
       setSwitcher(move);
+      if (!onChangeTheme) {
+         throw new Error('Theme change function is undefined');
+      }
       onChangeTheme();
    };
 

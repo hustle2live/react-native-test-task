@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { COLORS_LIGHT, COLORS_DARK, FONTS } from '../constants';
 import { StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
+import { ThemeContextProps } from '../types/props-styles.type';
 
 type ThemeType = typeof COLORS_LIGHT | typeof COLORS_DARK;
 
@@ -14,12 +15,6 @@ type FontStyleType = Record<
       fontFamily: string;
    }
 >;
-
-interface ThemeContextProps {
-   theme: ThemeType;
-   toggleTheme: () => void;
-   fonts: FontStyleType;
-}
 
 const fontStyles: FontStyleType = StyleSheet.create({
    LobsterRegular: {

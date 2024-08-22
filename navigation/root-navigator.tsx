@@ -16,10 +16,14 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
    const themeContext: ThemeContextProps | undefined = useTheme();
+
+   if (!themeContext) return;
+
    const fontPrimary = themeContext?.fonts.LobsterRegular.fontFamily;
 
    const themeColors = themeContext?.theme;
    const themeFonts = themeContext?.fonts;
+   const handleThemeChange = themeContext?.toggleTheme;
 
    const screenStyles = StyleSheet.create({
       headerStyle: {
@@ -31,7 +35,6 @@ const RootNavigator = () => {
    });
 
    const themeStyleProps = {
-      colors: themeColors,
       fonts: themeFonts
    };
 
@@ -43,18 +46,20 @@ const RootNavigator = () => {
                <RootStack.Screen
                   options={{ headerShown: false }}
                   name={ROUTE_NAME.BOTTOM_TABS_NAVIGATOR}
-                  component={BottomTabsNavigator}
                   initialParams={themeStyleProps}
-               />
+               >
+                  {(props) => <BottomTabsNavigator {...props} theme={themeColors} toggleTheme={handleThemeChange} />}
+               </RootStack.Screen>
 
                <RootStack.Screen
                   name={ROUTE_NAME.ADD_INSPIRATION}
-                  component={AddInspiration}
                   initialParams={themeStyleProps}
                   options={{
                      headerStyle: { backgroundColor: themeContext?.theme.APP_BACKGROUND, height: 46 }
                   }}
-               />
+               >
+                  {(props) => <AddInspiration {...props} colors={themeColors} />}
+               </RootStack.Screen>
             </RootStack.Navigator>
          </NavigationContainer>
       </>

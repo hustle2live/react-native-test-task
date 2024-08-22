@@ -1,14 +1,14 @@
-import React, { useCallback } from 'react';
-
+import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Dashboard, Settings } from '../screens';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../hooks';
-import { FontStyleType, ThemeContextProps } from '../contexts/theme-context';
+import { FontStyleType } from '../contexts/theme-context';
 import { ROUTE_NAME } from '../enums';
 import { BottomTabsParamList, RootStackScreenProps } from '../types';
-import { Link } from '@react-navigation/native';
+import { ThemeContextProps, ThemeScreepProps } from '../types/props-styles.type';
 
 const Tabs = createBottomTabNavigator<BottomTabsParamList>();
 
@@ -29,19 +29,16 @@ const TabButton = ({ props }: TProps) => {
    return <Ionicons name={name} size={size} color={!focused ? secondaryColor : primaryColor} />;
 };
 
-type Props = RootStackScreenProps<'BottomTabsNavigator'>;
+type NavProps = RootStackScreenProps<'BottomTabsNavigator'> & Pick<ThemeContextProps, 'toggleTheme' | 'theme'>;
 
-const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX.Element => {
-   const themeContext = useTheme();
-   const themeColors = themeContext?.theme;
-   const themeFonts = themeContext?.fonts;
+const BottomTabsNavigator: React.FC<NavProps> = ({ navigation, route, theme, toggleTheme }: NavProps): JSX.Element => {
+   const themeFonts = route.params.fonts;
+   const colors = theme;
 
-   const tabBackground = themeColors?.APP_BACKGROUND;
-   const primaryColor = themeColors?.PRIMARY ?? '#660014';
-   const secondaryColor = themeColors?.SECONDARY ?? '#e8caa2';
+   const tabBackground = colors?.APP_BACKGROUND;
+   const primaryColor = colors?.PRIMARY;
+   const secondaryColor = colors?.SECONDARY;
    const LobsterRegular = themeFonts?.LobsterRegular.fontFamily;
-
-   const goToAddInspiration = () => navigation.navigate('AddInspiration');
 
    return (
       <Tabs.Navigator
@@ -60,10 +57,7 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
       >
          <Tabs.Screen
             name={ROUTE_NAME.DASHBOARD}
-            component={Dashboard}
             initialParams={{
-               onpress: goToAddInspiration,
-               colors: themeColors,
                fonts: themeFonts
             }}
             options={{
@@ -73,9 +67,9 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                   <TabButton props={{ ...props, name: 'home', size: 20, primaryColor, secondaryColor, themeFonts }} />
                ),
                headerRight: (props) => (
-                  <Link to={{ screen: 'AddInspiration' }}>
+                  <TouchableOpacity onPress={() => navigation.navigate('AddInspiration')}>
                      <Ionicons name='add-circle' size={32} color={primaryColor} />
-                  </Link>
+                  </TouchableOpacity>
                ),
                headerRightContainerStyle: { paddingRight: 10 },
                headerStyle: {
@@ -84,7 +78,9 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                },
                headerTitle: 'Find Your Inspiration'
             }}
-         ></Tabs.Screen>
+         >
+            {(props) => <Dashboard {...props} colors={colors} />}
+         </Tabs.Screen>
 
          <Tabs.Screen
             name={ROUTE_NAME.SETTINGS}
@@ -102,7 +98,7 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                }
             }}
          >
-            {(props) => <Settings {...props} colors={themeColors} onChangeTheme={() => themeContext?.toggleTheme()} />}
+            {(props) => <Settings {...props} colors={colors} onChangeTheme={toggleTheme} />}
          </Tabs.Screen>
       </Tabs.Navigator>
    );
