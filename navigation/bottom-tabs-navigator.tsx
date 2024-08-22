@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Dashboard, Settings } from '../screens';
 import { Ionicons } from '@expo/vector-icons';
-import { FontStyleType } from '../contexts/theme-context';
 import { ROUTE_NAME } from '../enums';
 import { BottomTabsParamList, RootStackScreenProps } from '../types';
 import { ThemeContextProps } from '../types/props-styles.type';
+import { TabButton } from './button-tab';
 
 const Tabs = createBottomTabNavigator<BottomTabsParamList>();
 
@@ -90,23 +90,6 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
          </Tabs.Screen>
       </Tabs.Navigator>
    );
-};
-
-type TProps = {
-   props: {
-      focused?: boolean;
-      color?: string;
-      size?: number;
-      name?: any;
-      primaryColor?: string;
-      secondaryColor?: string;
-      themeFonts?: FontStyleType;
-   };
-};
-
-const TabButton = ({ props }: TProps) => {
-   const { name, focused, primaryColor, secondaryColor, size } = props;
-   return <Ionicons name={name} size={size} color={!focused ? secondaryColor : primaryColor} />;
 };
 
 export { BottomTabsNavigator };
