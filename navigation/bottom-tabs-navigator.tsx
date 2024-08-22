@@ -4,11 +4,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Dashboard, Settings } from '../screens';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../hooks';
 import { FontStyleType } from '../contexts/theme-context';
 import { ROUTE_NAME } from '../enums';
 import { BottomTabsParamList, RootStackScreenProps } from '../types';
-import { ThemeContextProps, ThemeScreepProps } from '../types/props-styles.type';
+import { ThemeContextProps } from '../types/props-styles.type';
 
 const Tabs = createBottomTabNavigator<BottomTabsParamList>();
 
@@ -67,7 +66,7 @@ const BottomTabsNavigator: React.FC<NavProps> = ({ navigation, route, theme, tog
                   <TabButton props={{ ...props, name: 'home', size: 20, primaryColor, secondaryColor, themeFonts }} />
                ),
                headerRight: (props) => (
-                  <TouchableOpacity onPress={() => navigation.navigate('AddInspiration')}>
+                  <TouchableOpacity onPress={() => navigation.navigate(ROUTE_NAME.ADD_INSPIRATION)}>
                      <Ionicons name='add-circle' size={32} color={primaryColor} />
                   </TouchableOpacity>
                ),

@@ -36,19 +36,19 @@ const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProp
       },
       switchLine: {
          position: 'relative',
-         backgroundColor: isLight ? colors?.SECONDARY : colors?.APP_BACKGROUND,
+         backgroundColor: isLight ? colors.GREY : colors.SECONDARY,
          width: 38,
-         height: 15,
-         borderRadius: 10
+         height: 18,
+         borderRadius: 8
       },
       switchCircle: {
          position: 'absolute',
-         backgroundColor: isLight ? colors?.PRIMARY : colors?.GREY,
+         backgroundColor: colors.PRIMARY,
          width: 30,
          height: 30,
-         borderRadius: 30,
+         borderRadius: 15,
          left: 0,
-         top: 7,
+         top: 9,
          transform: [{ translateX: switcher }, { translateY: '-50%' }]
       }
    });
@@ -65,11 +65,11 @@ const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProp
    return (
       <View style={styles.container}>
          <ScreenBackground />
-         <Ionicons name='sunny' size={28} />
+         <Ionicons name='sunny' size={28} color={isLight ? colors.PRIMARY : colors.SECONDARY} />
          <Pressable onPress={handleSwitchTheme} style={styles.switchLine}>
             <Ionicons name='radio-button-off' color={colors?.PRIMARY} size={30} style={styles.switchCircle} />
          </Pressable>
-         <Ionicons name='moon' size={28} />
+         <Ionicons name='moon' size={28} color={isLight ? colors.SECONDARY : colors.PRIMARY} />
       </View>
    );
 };

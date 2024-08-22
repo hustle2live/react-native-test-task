@@ -11,13 +11,16 @@ import { ROUTE_NAME } from '../enums';
 import { useTheme } from '../hooks';
 import { AddInspiration } from '../screens';
 import { StyleSheet } from 'react-native';
+import { Loader } from '../loader/loader';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
-const RootNavigator = () => {
+const RootNavigator: React.FC = () => {
    const themeContext: ThemeContextProps | undefined = useTheme();
 
-   if (!themeContext) return;
+   if (!themeContext) {
+      return <Loader color='#c86822' background='#fae8c0' />;
+   }
 
    const fontPrimary = themeContext?.fonts.LobsterRegular.fontFamily;
 
