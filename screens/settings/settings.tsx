@@ -22,36 +22,36 @@ const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProp
    const isLight = colors === COLORS_LIGHT;
 
    const defaultStyles = {
-      sunny: colors.PRIMARY,
-      moon: colors.SECONDARY,
-      switcher: colors.GREY,
-      switchPositionX: POSITIONS.LEFT
+      iconSun: colors.PRIMARY,
+      iconMoon: colors.SECONDARY,
+      switcherLine: colors.GREY,
+      switcherPositionX: POSITIONS.LEFT
    };
 
    if (!isLight) {
       Object.assign(defaultStyles, {
-         sunny: colors.SECONDARY,
-         moon: colors.PRIMARY,
-         switcher: colors.SECONDARY,
-         switchPositionX: POSITIONS.RIGHT
+         iconSun: colors.SECONDARY,
+         iconMoon: colors.PRIMARY,
+         switcherLine: colors.SECONDARY,
+         switcherPositionX: POSITIONS.RIGHT
       });
    }
 
    const activeStyles = StyleSheet.create({
       switchLine: {
-         backgroundColor: defaultStyles.switcher
+         backgroundColor: defaultStyles.switcherLine
       },
       switchCircle: {
          backgroundColor: colors.PRIMARY,
-         transform: [{ translateX: defaultStyles.switchPositionX }, { translateY: '-50%' }]
+         transform: [{ translateX: defaultStyles.switcherPositionX }, { translateY: '-50%' }]
       }
    });
 
-   const [switcher, setSwitcher] = useState<SwitcherPositionX>(defaultStyles.switchPositionX);
+   const [switcher, setSwitcher] = useState<SwitcherPositionX>(defaultStyles.switcherPositionX);
 
    const handleSwitchTheme = (): void => {
-      const switchPositionX = switcher === POSITIONS.LEFT ? POSITIONS.RIGHT : POSITIONS.LEFT;
-      setSwitcher(switchPositionX);
+      const switcherPositionX = switcher === POSITIONS.LEFT ? POSITIONS.RIGHT : POSITIONS.LEFT;
+      setSwitcher(switcherPositionX);
       if (!onChangeTheme) {
          throw new Error('Theme change function is undefined');
       }
@@ -61,15 +61,8 @@ const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProp
    return (
       <View style={styles.container}>
          <ScreenBackground />
-         <Ionicons
-            name='sunny'
-            size={28}
-            color={defaultStyles.sunny}
-         />
-         <Pressable
-            onPress={handleSwitchTheme}
-            style={[styles.switchLine, activeStyles.switchLine]}
-         >
+         <Ionicons name='sunny' size={28} color={defaultStyles.iconSun} />
+         <Pressable onPress={handleSwitchTheme} style={[styles.switchLine, activeStyles.switchLine]}>
             <Ionicons
                name='radio-button-off'
                color={colors.PRIMARY}
@@ -77,11 +70,7 @@ const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProp
                style={[styles.switchCircle, activeStyles.switchCircle]}
             />
          </Pressable>
-         <Ionicons
-            name='moon'
-            size={28}
-            color={defaultStyles.moon}
-         />
+         <Ionicons name='moon' size={28} color={defaultStyles.iconMoon} />
       </View>
    );
 };
