@@ -18,7 +18,7 @@ type BottomTabsParamList = {
       inspiration?: Inspiration;
       onpress?: () => void;
    };
-   [ROUTE_NAME.SETTINGS]: Partial<ThemeProps>;
+   [ROUTE_NAME.SETTINGS]: undefined;
 };
 
 declare global {

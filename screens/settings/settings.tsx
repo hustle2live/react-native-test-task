@@ -1,27 +1,24 @@
 import React, { useState } from 'react';
-import { Animated, View, TouchableOpacity, Pressable, StyleSheet, Touchable } from 'react-native';
+import { View, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { ScreenBackground } from '../screen-background/screen-background';
-import { BottomTabsParamList } from '../../types';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { type ThemeProps } from '../../types/props-styles.type';
 import { COLORS_LIGHT } from '../../constants';
 
-type ThemeProp = {
-   onChangeTheme: () => void;
-};
-
-type Props = NativeStackScreenProps<BottomTabsParamList, 'Settings'> & ThemeProp;
+import { ScreenBackground } from '../screen-background/screen-background';
 
 const POSITIONS = {
    LEFT: '-50%',
    RIGHT: '50%'
 } as const;
 
+type SettingProps = Partial<ThemeProps> & {
+   onChangeTheme: () => void;
+};
+
 type SwitcherPositionX = (typeof POSITIONS)[keyof typeof POSITIONS];
 
-const Settings: React.FC<Props> = ({ route, onChangeTheme }: Props) => {
-   const { colors } = route.params;
+const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProps) => {
    const isLight = colors === COLORS_LIGHT;
 
    const initialSwitcherPositionX = isLight ? POSITIONS.LEFT : POSITIONS.RIGHT;

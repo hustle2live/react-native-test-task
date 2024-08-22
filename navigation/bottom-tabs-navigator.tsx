@@ -40,7 +40,6 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
    const primaryColor = themeColors?.PRIMARY ?? '#660014';
    const secondaryColor = themeColors?.SECONDARY ?? '#e8caa2';
    const LobsterRegular = themeFonts?.LobsterRegular.fontFamily;
-   // const LobsterItalic = themeFonts?.LobsterItalic.fontFamily;
 
    const goToAddInspiration = () => navigation.navigate('AddInspiration');
 
@@ -89,10 +88,6 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
 
          <Tabs.Screen
             name={ROUTE_NAME.SETTINGS}
-            initialParams={{
-               colors: themeColors,
-               fonts: themeFonts
-            }}
             options={{
                tabBarLabelStyle: { fontFamily: LobsterRegular, fontSize: 13, fontWeight: 400 },
                tabBarLabelPosition: 'below-icon',
@@ -107,7 +102,7 @@ const BottomTabsNavigator: React.FC<Props> = ({ navigation, route }: Props): JSX
                }
             }}
          >
-            {(props) => <Settings {...props} onChangeTheme={() => themeContext?.toggleTheme()} />}
+            {(props) => <Settings {...props} colors={themeColors} onChangeTheme={() => themeContext?.toggleTheme()} />}
          </Tabs.Screen>
       </Tabs.Navigator>
    );
