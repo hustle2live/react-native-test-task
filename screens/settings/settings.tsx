@@ -21,41 +21,37 @@ type SwitcherPositionX = (typeof POSITIONS)[keyof typeof POSITIONS];
 const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProps) => {
    const isLight = colors === COLORS_LIGHT;
 
-   const initialSwitcherPositionX = isLight ? POSITIONS.LEFT : POSITIONS.RIGHT;
+   const defaultStyles = {
+      sunny: colors.PRIMARY,
+      moon: colors.SECONDARY,
+      switcher: colors.GREY,
+      switchPositionX: POSITIONS.LEFT
+   };
 
-   const [switcher, setSwitcher] = useState<SwitcherPositionX>(initialSwitcherPositionX);
+   if (!isLight) {
+      Object.assign(defaultStyles, {
+         sunny: colors.SECONDARY,
+         moon: colors.PRIMARY,
+         switcher: colors.SECONDARY,
+         switchPositionX: POSITIONS.RIGHT
+      });
+   }
 
-   const styles = StyleSheet.create({
-      container: {
-         flexDirection: 'row',
-         minWidth: '100%',
-         minHeight: '100%',
-         alignItems: 'center',
-         justifyContent: 'center',
-         gap: 24
-      },
+   const activeStyles = StyleSheet.create({
       switchLine: {
-         position: 'relative',
-         backgroundColor: isLight ? colors.GREY : colors.SECONDARY,
-         width: 38,
-         height: 18,
-         borderRadius: 8
+         backgroundColor: defaultStyles.switcher
       },
       switchCircle: {
-         position: 'absolute',
          backgroundColor: colors.PRIMARY,
-         width: 30,
-         height: 30,
-         borderRadius: 15,
-         left: 0,
-         top: 9,
-         transform: [{ translateX: switcher }, { translateY: '-50%' }]
+         transform: [{ translateX: defaultStyles.switchPositionX }, { translateY: '-50%' }]
       }
    });
 
+   const [switcher, setSwitcher] = useState<SwitcherPositionX>(defaultStyles.switchPositionX);
+
    const handleSwitchTheme = (): void => {
-      const move = switcher === POSITIONS.LEFT ? POSITIONS.RIGHT : POSITIONS.LEFT;
-      setSwitcher(move);
+      const switchPositionX = switcher === POSITIONS.LEFT ? POSITIONS.RIGHT : POSITIONS.LEFT;
+      setSwitcher(switchPositionX);
       if (!onChangeTheme) {
          throw new Error('Theme change function is undefined');
       }
@@ -65,13 +61,54 @@ const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProp
    return (
       <View style={styles.container}>
          <ScreenBackground />
-         <Ionicons name='sunny' size={28} color={isLight ? colors.PRIMARY : colors.SECONDARY} />
-         <Pressable onPress={handleSwitchTheme} style={styles.switchLine}>
-            <Ionicons name='radio-button-off' color={colors?.PRIMARY} size={30} style={styles.switchCircle} />
+         <Ionicons
+            name='sunny'
+            size={28}
+            color={defaultStyles.sunny}
+         />
+         <Pressable
+            onPress={handleSwitchTheme}
+            style={[styles.switchLine, activeStyles.switchLine]}
+         >
+            <Ionicons
+               name='radio-button-off'
+               color={colors.PRIMARY}
+               size={30}
+               style={[styles.switchCircle, activeStyles.switchCircle]}
+            />
          </Pressable>
-         <Ionicons name='moon' size={28} color={isLight ? colors.SECONDARY : colors.PRIMARY} />
+         <Ionicons
+            name='moon'
+            size={28}
+            color={defaultStyles.moon}
+         />
       </View>
    );
 };
+
+const styles = StyleSheet.create({
+   container: {
+      flexDirection: 'row',
+      minWidth: '100%',
+      minHeight: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 24
+   },
+   switchLine: {
+      position: 'relative',
+      width: 38,
+      height: 18,
+      borderRadius: 8
+   },
+   switchCircle: {
+      position: 'absolute',
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+      left: 0,
+      top: 9
+   }
+});
 
 export { Settings };
