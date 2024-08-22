@@ -11,13 +11,13 @@ import { TabButton } from './button-tab';
 
 const Tabs = createBottomTabNavigator<BottomTabsParamList>();
 
-type HeadStyles = {
+type HeaderStyles = {
    headerStyles: Record<string | number, Record<string, string | number>>;
 };
 
 type NavProps = RootStackScreenProps<'BottomTabsNavigator'> &
    Pick<ThemeContextProps, 'toggleTheme' | 'theme'> &
-   HeadStyles;
+   HeaderStyles;
 
 const BottomTabsNavigator: React.FC<NavProps> = ({
    navigation,
