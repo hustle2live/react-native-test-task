@@ -30,10 +30,12 @@ const RootNavigator: React.FC = () => {
 
    const screenStyles = StyleSheet.create({
       headerStyle: {
-         backgroundColor: themeContext?.theme.APP_BACKGROUND
+         backgroundColor: themeContext?.theme.APP_BACKGROUND,
+         height: 46
       },
       headerTitleStyle: {
-         fontFamily: fontPrimary
+         fontFamily: fontPrimary,
+         color: themeColors.PRIMARY
       }
    });
 
@@ -47,18 +49,25 @@ const RootNavigator: React.FC = () => {
          <NavigationContainer>
             <RootStack.Navigator initialRouteName='BottomTabsNavigator' screenOptions={screenStyles}>
                <RootStack.Screen
-                  options={{ headerShown: false }}
+                  options={{ headerShown: false, ...screenStyles }}
                   name={ROUTE_NAME.BOTTOM_TABS_NAVIGATOR}
                   initialParams={themeStyleProps}
                >
-                  {(props) => <BottomTabsNavigator {...props} theme={themeColors} toggleTheme={handleThemeChange} />}
+                  {(props) => (
+                     <BottomTabsNavigator
+                        {...props}
+                        theme={themeColors}
+                        headerStyles={screenStyles}
+                        toggleTheme={handleThemeChange}
+                     />
+                  )}
                </RootStack.Screen>
 
                <RootStack.Screen
                   name={ROUTE_NAME.ADD_INSPIRATION}
                   initialParams={themeStyleProps}
                   options={{
-                     headerStyle: { backgroundColor: themeContext?.theme.APP_BACKGROUND, height: 46 }
+                     ...screenStyles
                   }}
                >
                   {(props) => <AddInspiration {...props} colors={themeColors} />}

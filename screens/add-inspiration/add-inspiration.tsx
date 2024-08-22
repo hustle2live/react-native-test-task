@@ -5,10 +5,12 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types/navigation.type';
 import { ScreenBackground } from '../screen-background/screen-background';
 import { ThemeScreepProps } from '../../types/props-styles.type';
+import { COLORS_LIGHT } from '../../constants';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & Partial<ThemeScreepProps>;
 
 const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) => {
+   const isLight = colors === COLORS_LIGHT;
    const themeFonts = route.params.fonts;
    const imageSource: { uri: string } = { uri: '../../assets/no-image.jpg' };
 

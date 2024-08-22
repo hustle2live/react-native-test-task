@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Dashboard, Settings } from '../screens';
@@ -11,26 +11,21 @@ import { ThemeContextProps } from '../types/props-styles.type';
 
 const Tabs = createBottomTabNavigator<BottomTabsParamList>();
 
-type TProps = {
-   props: {
-      focused?: boolean;
-      color?: string;
-      size?: number;
-      name?: any;
-      primaryColor?: string;
-      secondaryColor?: string;
-      themeFonts?: FontStyleType;
-   };
+type HeadStyles = {
+   headerStyles: Record<string | number, Record<string, string | number>>;
 };
 
-const TabButton = ({ props }: TProps) => {
-   const { name, focused, primaryColor, secondaryColor, size } = props;
-   return <Ionicons name={name} size={size} color={!focused ? secondaryColor : primaryColor} />;
-};
+type NavProps = RootStackScreenProps<'BottomTabsNavigator'> &
+   Pick<ThemeContextProps, 'toggleTheme' | 'theme'> &
+   HeadStyles;
 
-type NavProps = RootStackScreenProps<'BottomTabsNavigator'> & Pick<ThemeContextProps, 'toggleTheme' | 'theme'>;
-
-const BottomTabsNavigator: React.FC<NavProps> = ({ navigation, route, theme, toggleTheme }: NavProps): JSX.Element => {
+const BottomTabsNavigator: React.FC<NavProps> = ({
+   navigation,
+   route,
+   theme,
+   toggleTheme,
+   headerStyles
+}: NavProps): JSX.Element => {
    const themeFonts = route.params.fonts;
    const colors = theme;
 
@@ -71,11 +66,8 @@ const BottomTabsNavigator: React.FC<NavProps> = ({ navigation, route, theme, tog
                   </TouchableOpacity>
                ),
                headerRightContainerStyle: { paddingRight: 10 },
-               headerStyle: {
-                  backgroundColor: tabBackground,
-                  height: 46
-               },
-               headerTitle: 'Find Your Inspiration'
+               headerTitle: 'Find Your Inspiration',
+               ...headerStyles
             }}
          >
             {(props) => <Dashboard {...props} colors={colors} />}
@@ -91,16 +83,30 @@ const BottomTabsNavigator: React.FC<NavProps> = ({ navigation, route, theme, tog
                      props={{ ...props, name: 'settings', size: 20, primaryColor, secondaryColor, themeFonts }}
                   />
                ),
-               headerStyle: {
-                  backgroundColor: tabBackground,
-                  height: 46
-               }
+               ...headerStyles
             }}
          >
             {(props) => <Settings {...props} colors={colors} onChangeTheme={toggleTheme} />}
          </Tabs.Screen>
       </Tabs.Navigator>
    );
+};
+
+type TProps = {
+   props: {
+      focused?: boolean;
+      color?: string;
+      size?: number;
+      name?: any;
+      primaryColor?: string;
+      secondaryColor?: string;
+      themeFonts?: FontStyleType;
+   };
+};
+
+const TabButton = ({ props }: TProps) => {
+   const { name, focused, primaryColor, secondaryColor, size } = props;
+   return <Ionicons name={name} size={size} color={!focused ? secondaryColor : primaryColor} />;
 };
 
 export { BottomTabsNavigator };
