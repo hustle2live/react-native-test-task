@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, SafeAreaView, ImageBackground, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+   Text,
+   TextInput,
+   View,
+   SafeAreaView,
+   ImageBackground,
+   TouchableOpacity,
+   StyleSheet,
+   Alert
+} from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '../../types/navigation.type';
@@ -11,7 +20,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & Part
 
 const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) => {
    const isLight = colors === COLORS_LIGHT;
-   const themeFonts = route.params.fonts;
+   const themeFonts = route?.params?.fonts;
    const imageSource: { uri: string } = { uri: '../../assets/no-image.jpg' };
 
    const buttonStyles = StyleSheet.create({
@@ -26,17 +35,17 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
          borderColor: colors?.PRIMARY,
          backgroundColor: colors?.APP_BACKGROUND,
          textAlign: 'center',
-         alignItems: 'center',
-         fontWeight: 400
+         alignItems: 'center'
+         // fontWeight: 400
       },
       filled: { backgroundColor: colors?.PRIMARY, color: colors?.FONT_INVERSE },
       halfSize: { flex: 1 },
       fullSize: { width: '100%' },
       text: {
-         fontWeight: 400,
+         // fontWeight: 400,
          fontStyle: 'normal',
          color: 'inherit',
-         fontFamily: 'inherit'
+         fontFamily: themeFonts?.LobsterRegular.fontFamily
       }
    });
 
@@ -45,12 +54,36 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
          height: 84,
          padding: 10,
          textAlign: 'left',
-         color: colors?.FONT_MAIN,
-         fontFamily: 'unset'
+         color: colors?.FONT_MAIN
+         // fontFamily: none
       }
    });
 
    const [text, setText] = useState<string>('');
+
+   const showAlert = () =>
+      Alert.alert(
+         'Choose image',
+         'please select the method',
+         [
+            {
+               text: 'Gallery',
+               onPress: () => console.log('Ask me later pressed'),
+               style: 'default'
+            },
+            {
+               text: 'Camera',
+               onPress: () => console.log('Cancel Pressed'),
+               style: 'destructive'
+            },
+            {
+               text: 'Cancel',
+               onPress: () => console.log('OK Pressed'),
+               style: 'cancel'
+            }
+         ],
+         { cancelable: true }
+      );
 
    return (
       <View style={{ minWidth: '100%', minHeight: '100%', gap: 20, padding: 20, overflow: 'scroll' }}>
@@ -68,6 +101,8 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
                   ...buttonStyles.primary,
                   ...buttonStyles.halfSize
                }}
+               onPress={showAlert}
+               // onPress={() => console.log('touchable alert')}
             >
                <Text style={buttonStyles.text}>Choose Image</Text>
             </TouchableOpacity>

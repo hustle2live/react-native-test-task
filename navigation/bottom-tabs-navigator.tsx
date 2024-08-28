@@ -19,13 +19,7 @@ type NavProps = RootStackScreenProps<'BottomTabsNavigator'> &
    Pick<ThemeContextProps, 'toggleTheme' | 'theme'> &
    HeaderStyles;
 
-const BottomTabsNavigator: React.FC<NavProps> = ({
-   navigation,
-   route,
-   theme,
-   toggleTheme,
-   headerStyles
-}: NavProps): JSX.Element => {
+const BottomTabsNavigator: React.FC<NavProps> = ({ navigation, route, theme, toggleTheme, headerStyles }: NavProps) => {
    const themeFonts = route.params.fonts;
    const colors = theme;
 
@@ -55,13 +49,14 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
                fonts: themeFonts
             }}
             options={{
-               tabBarLabelStyle: { fontFamily: LobsterRegular, fontSize: 13, fontWeight: 400 },
+               tabBarLabelStyle: { fontFamily: LobsterRegular, fontSize: 13, fontWeight: '400' },
                tabBarLabelPosition: 'below-icon',
                tabBarIcon: (props) => (
                   <TabButton props={{ ...props, name: 'home', size: 20, primaryColor, secondaryColor, themeFonts }} />
                ),
                headerRight: (props) => (
-                  <TouchableOpacity onPress={() => navigation.navigate(ROUTE_NAME.ADD_INSPIRATION)}>
+                  // <TouchableOpacity onPress={() => navigation.navigate('AddInspiration' as never)}>
+                  <TouchableOpacity onPress={() => navigation.navigate('AddInspiration', {})}>
                      <Ionicons name='add-circle' size={32} color={primaryColor} />
                   </TouchableOpacity>
                ),
@@ -76,7 +71,7 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
          <Tabs.Screen
             name={ROUTE_NAME.SETTINGS}
             options={{
-               tabBarLabelStyle: { fontFamily: LobsterRegular, fontSize: 13, fontWeight: 400 },
+               tabBarLabelStyle: { fontFamily: LobsterRegular, fontSize: 13, fontWeight: '400' },
                tabBarLabelPosition: 'below-icon',
                tabBarIcon: (props) => (
                   <TabButton

@@ -10,7 +10,9 @@ type NavigationRoute = (typeof ROUTE_NAME)[keyof typeof ROUTE_NAME];
 
 type RootStackParamList = {
    [ROUTE_NAME.BOTTOM_TABS_NAVIGATOR]: NavigatorScreenParams<BottomTabsParamList> & Partial<ThemeScreepProps>;
-   [ROUTE_NAME.ADD_INSPIRATION]: Partial<ThemeScreepProps>;
+   [ROUTE_NAME.ADD_INSPIRATION]: Partial<ThemeScreepProps> & {
+      onpress?: () => void;
+   };
 };
 
 type BottomTabsParamList = {
@@ -18,6 +20,7 @@ type BottomTabsParamList = {
       inspiration?: Inspiration;
       onpress?: () => void;
    };
+
    [ROUTE_NAME.SETTINGS]: undefined;
 };
 

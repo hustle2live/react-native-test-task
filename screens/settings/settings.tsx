@@ -8,8 +8,8 @@ import { COLORS_LIGHT } from '../../constants';
 import { ScreenBackground } from '../screen-background/screen-background';
 
 const POSITIONS = {
-   LEFT: '-50%',
-   RIGHT: '50%'
+   LEFT: 50,
+   RIGHT: 50
 } as const;
 
 type SettingProps = Pick<ThemeScreepProps, 'colors'> & {
@@ -43,7 +43,7 @@ const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProp
       },
       switchCircle: {
          backgroundColor: colors.PRIMARY,
-         transform: [{ translateX: defaultStyles.switcherPositionX }, { translateY: '-50%' }]
+         transform: [{ translateX: defaultStyles.switcherPositionX }, { translateY: -50 }]
       }
    });
 

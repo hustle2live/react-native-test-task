@@ -4,6 +4,7 @@ import { useTheme } from '../../hooks';
 
 const ScreenBackground = () => {
    const imageSource: { uri: string } = { uri: '../../assets/leaf.png' };
+   // const imageSource: { uri: string } = { uri: 'C:GitHub_hustle2live\react-native-test-taskassetsleaf.png' };
 
    const theme = useTheme();
    const bgColor = theme?.theme.APP_BACKGROUND;
@@ -17,7 +18,7 @@ const ScreenBackground = () => {
             style={{
                ...styles.style,
                alignSelf: 'flex-end',
-               transform: [{ rotate: 'none' }]
+               transform: [{ rotate: '0deg' }]
             }}
          />
       </View>

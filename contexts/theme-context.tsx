@@ -1,10 +1,17 @@
 import React, { createContext, useState, useEffect, ReactNode, useMemo } from 'react';
+import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 import { COLORS_LIGHT, COLORS_DARK, FONTS } from '../constants';
-import { StyleSheet } from 'react-native';
-import { useFonts } from 'expo-font';
 import { ThemeContextProps } from '../types/props-styles.type';
+import { useFonts } from '../hooks/use-fonts';
+
+import * as SplashScreen from 'expo-splash-screen';
+import { Loader } from '../loader/loader';
+
+// import { useFonts } from 'expo-font';
 
 type ThemeType = typeof COLORS_LIGHT | typeof COLORS_DARK;
 
@@ -29,19 +36,28 @@ const fontStyles: FontStyleType = StyleSheet.create({
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
+// SplashScreen.preventAutoHideAsync();
+
 const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
    const [theme, setTheme] = useState<ThemeType>(COLORS_LIGHT);
+   const [isLoaded, setIsLoaded] = useState(false);
 
-   try {
-      const [fontsLoaded, error] = useFonts({
-         [FONTS.LOBSTER_REGULAR]: require('../assets/fonts/LobsterTwo-Regular.otf'),
-         [FONTS.LOBSTER_ITALIC]: require('../assets/fonts/LobsterTwo-Italic.otf')
-      });
-      if (!fontsLoaded && error) throw new Error(error.message);
-   } catch (error) {
-      console.log(error);
+   const [resolve, reject] = [() => setIsLoaded(true), (msg: string) => console.warn(msg)];
+   const Prepare = async () => {
+      useFonts(resolve, reject);
+   };
+   useEffect(() => {
+      setTimeout(Prepare, 1300);
+   }, []);
+
+   if (!isLoaded) {
+      return <Loader color='#c86822' background='#fae8c0' />;
+      // return null;
    }
 
+   // SplashScreen.hideAsync();
+
+   // ----------------------------------
    // Add logic to retrieve theme from AsyncStorage here
 
    // useEffect(() => {
