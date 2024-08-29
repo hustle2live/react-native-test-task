@@ -36,8 +36,6 @@ const fontStyles: FontStyleType = StyleSheet.create({
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
-// SplashScreen.preventAutoHideAsync();
-
 const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
    const [theme, setTheme] = useState<ThemeType>(COLORS_LIGHT);
    const [isLoaded, setIsLoaded] = useState(false);
@@ -52,10 +50,7 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
    if (!isLoaded) {
       return <Loader color='#c86822' background='#fae8c0' />;
-      // return null;
    }
-
-   // SplashScreen.hideAsync();
 
    // ----------------------------------
    // Add logic to retrieve theme from AsyncStorage here
