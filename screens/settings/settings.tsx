@@ -16,7 +16,7 @@ type SettingProps = Pick<ThemeScreepProps, 'colors'> & {
    onChangeTheme: () => void | undefined;
 };
 
-type SwitcherPositionX = (typeof POSITIONS)[keyof typeof POSITIONS];
+// type SwitcherPositionX = (typeof POSITIONS)[keyof typeof POSITIONS];
 
 const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProps) => {
    const isLight = colors === COLORS_LIGHT;
