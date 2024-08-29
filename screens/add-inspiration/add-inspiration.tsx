@@ -18,16 +18,65 @@ import { COLORS_LIGHT } from '../../constants';
 
 import { launchCamera, pickImage } from '../../services/localImagePicker';
 import { getRandomImage } from '../../services/getRandomImage';
-import { GetImageResponseDto } from '../../types';
+import { GetImageResponseDto, GetQuoteResponseDto } from '../../types';
 import { Loader } from '../../loader/loader';
+import { getRandomQuote } from '../../services/getRandomQuote';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & Partial<ThemeScreepProps>;
+
+const handlePickImage = async (
+   imagePickMethod: () => Promise<GetImageResponseDto>,
+   setImage: (e: GetImageResponseDto) => void
+): Promise<void> => {
+   const data = await imagePickMethod();
+   if (data && data?.download_url) {
+      setImage(data);
+   }
+};
+
+const handleGetQuote = async (
+   quotePickCallback: () => Promise<GetQuoteResponseDto>,
+   setQuote: (x: string) => void
+): Promise<GetQuoteResponseDto | null> => {
+   const data = await quotePickCallback();
+   if (data && data?.quoteText) {
+      setQuote(data?.quoteText);
+      return data;
+   }
+   return null;
+};
+
+const showAlert = (setImageHandler: (e: GetImageResponseDto) => void) =>
+   Alert.alert(
+      'Choose image',
+      'please select the method',
+      [
+         {
+            text: 'Gallery',
+            onPress: () => handlePickImage(pickImage, setImageHandler),
+            style: 'default'
+         },
+         {
+            text: 'Camera',
+            onPress: () => handlePickImage(launchCamera, setImageHandler),
+            style: 'destructive'
+         },
+         {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+         }
+      ],
+      { cancelable: true }
+   );
 
 const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) => {
    const themeFonts = route?.params?.fonts;
    const noImageBlueprint = require('../../assets/no-image.jpg');
 
+   const [text, setText] = useState<string>('');
    const [image, setImage] = useState<GetImageResponseDto | null>(null);
+   const [qoute, setQoute] = useState<GetQuoteResponseDto | null>(null);
 
    const buttonStyles = StyleSheet.create({
       primary: {
@@ -65,43 +114,12 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
       }
    });
 
-   const [text, setText] = useState<string>('');
-
-   const handlePickImage = async (
-      imagePickMethod: () => Promise<GetImageResponseDto>,
-      setImage: (e: GetImageResponseDto) => void
-   ): Promise<void> => {
-      const data = await imagePickMethod();
-      if (data && data?.download_url) {
-         setImage(data);
-      }
-   };
-
-   const showAlert = (setImageHandler: (e: GetImageResponseDto) => void) =>
-      Alert.alert(
-         'Choose image',
-         'please select the method',
-         [
-            {
-               text: 'Gallery',
-               onPress: () => handlePickImage(pickImage, setImageHandler),
-               style: 'default'
-            },
-            {
-               text: 'Camera',
-               onPress: () => handlePickImage(launchCamera, setImageHandler),
-               style: 'destructive'
-            },
-            {
-               text: 'Cancel',
-               onPress: () => console.log('Cancel Pressed'),
-               style: 'cancel'
-            }
-         ],
-         { cancelable: true }
-      );
-
    const imageSource = image && image.download_url ? { uri: image.download_url } : noImageBlueprint;
+
+   const handleCreateinspiration = () => {
+      if (!qoute || !image) return;
+      console.warn('save image...');
+   };
 
    return (
       <View style={{ flex: 1, gap: 20, padding: 20 }}>
@@ -146,14 +164,22 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
             />
          </SafeAreaView>
 
-         <TouchableOpacity style={buttonStyles.primary}>
+         <TouchableOpacity
+            style={buttonStyles.primary}
+            onPress={async () => {
+               const newQuote = await handleGetQuote(getRandomQuote, setText);
+               if (newQuote) {
+                  setQoute(newQuote);
+               }
+            }}
+         >
             <Text style={buttonStyles.text}>Get a Random Quote</Text>
          </TouchableOpacity>
 
          <TouchableOpacity
             style={{ ...buttonStyles.primary, ...buttonStyles.filled }}
             onPress={() => {
-               console.log('save image');
+               handleCreateinspiration();
             }}
          >
             <Text style={{ ...buttonStyles.text, color: colors?.FONT_INVERSE }}>Save</Text>
