@@ -1,27 +1,56 @@
 import * as ImagePicker from 'expo-image-picker';
+import uuid from 'react-native-uuid';
 
-const pickImage = async () => {
+import { ImagePickerResult } from 'expo-image-picker';
+import { GetImageResponseDto } from '../types';
+
+const resultedImageData = (image?: ImagePicker.ImagePickerAsset): GetImageResponseDto => {
+   if (!image) return { id: '0', download_url: '' };
+
+   const uniqId = uuid.v4.toString();
+   return {
+      id: uniqId,
+      download_url: image.uri
+   };
+};
+
+const pickImage = async (): Promise<GetImageResponseDto> => {
    try {
       let result = await ImagePicker.launchImageLibraryAsync({
-         mediaTypes: ImagePicker.MediaTypeOptions.All,
+         mediaTypes: ImagePicker.MediaTypeOptions.Images,
          allowsEditing: true,
          aspect: [4, 3],
          quality: 1
       });
 
       if (!result.canceled) {
-         const image = result.assets[0].uri;
-
-         if (!image) {
-            throw new Error('Error while picking image');
-         }
-
-         const source = { uri: image };
-         return source;
+         return resultedImageData(result.assets[0]);
       }
+
+      throw new Error();
    } catch (error) {
-      console.warn(error);
+      console.warn('Picking up image canceled', error);
+      return resultedImageData();
    }
 };
 
-export { pickImage };
+const launchCamera = async (): Promise<GetImageResponseDto> => {
+   try {
+      const result: ImagePickerResult = await ImagePicker.launchCameraAsync({
+         mediaTypes: ImagePicker.MediaTypeOptions.Images,
+         allowsEditing: true,
+         aspect: [4, 3],
+         quality: 1
+      });
+
+      if (!result.canceled) {
+         return resultedImageData(result.assets[0]);
+      }
+      throw new Error();
+   } catch (error) {
+      console.warn('Picking up image canceled', error);
+      return resultedImageData();
+   }
+};
+
+export { pickImage, launchCamera };

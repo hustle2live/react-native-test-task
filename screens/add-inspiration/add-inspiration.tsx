@@ -16,15 +16,17 @@ import { ScreenBackground } from '../screen-background/screen-background';
 import { ThemeScreepProps } from '../../types/props-styles.type';
 import { COLORS_LIGHT } from '../../constants';
 
-import { pickImage } from '../../services/localImagePicker';
+import { launchCamera, pickImage } from '../../services/localImagePicker';
+import { getRandomImage } from '../../services/getRandomImage';
+import { GetImageResponseDto } from '../../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & Partial<ThemeScreepProps>;
 
 const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) => {
    const themeFonts = route?.params?.fonts;
-   const imageSource = require('../../assets/no-image.jpg');
+   const noImageBlueprint = require('../../assets/no-image.jpg');
 
-   const [image, setImage] = useState<{ uri: string } | null>(null);
+   const [image, setImage] = useState<GetImageResponseDto | null>(null);
 
    const buttonStyles = StyleSheet.create({
       primary: {
@@ -64,6 +66,14 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
 
    const [text, setText] = useState<string>('');
 
+   const handlePickImage = async (imagePickMethod: () => Promise<GetImageResponseDto>): Promise<void> => {
+      const data = await imagePickMethod();
+      if (data && data?.download_url) {
+         setImage(data);
+      }
+      return;
+   };
+
    const showAlert = () =>
       Alert.alert(
          'Choose image',
@@ -71,35 +81,31 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
          [
             {
                text: 'Gallery',
-               onPress: async () => {
-                  const data = await pickImage();
-                  if (data) {
-                     setImage(data);
-                  }
-                  console.log(data);
-               },
+               onPress: () => handlePickImage(pickImage),
                style: 'default'
             },
             {
                text: 'Camera',
-               onPress: () => console.log('Cancel Pressed'),
+               onPress: () => handlePickImage(launchCamera),
                style: 'destructive'
             },
             {
                text: 'Cancel',
-               onPress: () => console.log('OK Pressed'),
+               onPress: () => console.log('Cancel Pressed'),
                style: 'cancel'
             }
          ],
          { cancelable: true }
       );
 
+   const imageSource = image && image.download_url ? { uri: image.download_url } : noImageBlueprint;
+
    return (
       <View style={{ flex: 1, gap: 20, padding: 20 }}>
          <ScreenBackground />
 
          <ImageBackground
-            source={image ?? imageSource}
+            source={imageSource}
             style={{ width: 'auto', height: 200 }}
             imageStyle={{ width: 'auto', height: '100%', objectFit: 'fill', borderRadius: 10, cursor: 'pointer' }}
          ></ImageBackground>
@@ -119,6 +125,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
                   ...buttonStyles.primary,
                   ...buttonStyles.halfSize
                }}
+               onPress={() => handlePickImage(getRandomImage)}
             >
                <Text style={buttonStyles.text}>Get a Random Image</Text>
             </TouchableOpacity>
