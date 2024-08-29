@@ -19,6 +19,7 @@ import { COLORS_LIGHT } from '../../constants';
 import { launchCamera, pickImage } from '../../services/localImagePicker';
 import { getRandomImage } from '../../services/getRandomImage';
 import { GetImageResponseDto } from '../../types';
+import { Loader } from '../../loader/loader';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & Partial<ThemeScreepProps>;
 
@@ -66,27 +67,29 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
 
    const [text, setText] = useState<string>('');
 
-   const handlePickImage = async (imagePickMethod: () => Promise<GetImageResponseDto>): Promise<void> => {
+   const handlePickImage = async (
+      imagePickMethod: () => Promise<GetImageResponseDto>,
+      setImage: (e: GetImageResponseDto) => void
+   ): Promise<void> => {
       const data = await imagePickMethod();
       if (data && data?.download_url) {
          setImage(data);
       }
-      return;
    };
 
-   const showAlert = () =>
+   const showAlert = (setImageHandler: (e: GetImageResponseDto) => void) =>
       Alert.alert(
          'Choose image',
          'please select the method',
          [
             {
                text: 'Gallery',
-               onPress: () => handlePickImage(pickImage),
+               onPress: () => handlePickImage(pickImage, setImageHandler),
                style: 'default'
             },
             {
                text: 'Camera',
-               onPress: () => handlePickImage(launchCamera),
+               onPress: () => handlePickImage(launchCamera, setImageHandler),
                style: 'destructive'
             },
             {
@@ -116,7 +119,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
                   ...buttonStyles.primary,
                   ...buttonStyles.halfSize
                }}
-               onPress={showAlert}
+               onPress={() => showAlert(setImage)}
             >
                <Text style={buttonStyles.text}>Choose Image</Text>
             </TouchableOpacity>
@@ -125,7 +128,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
                   ...buttonStyles.primary,
                   ...buttonStyles.halfSize
                }}
-               onPress={() => handlePickImage(getRandomImage)}
+               onPress={() => handlePickImage(getRandomImage, setImage)}
             >
                <Text style={buttonStyles.text}>Get a Random Image</Text>
             </TouchableOpacity>
@@ -147,7 +150,12 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
             <Text style={buttonStyles.text}>Get a Random Quote</Text>
          </TouchableOpacity>
 
-         <TouchableOpacity style={{ ...buttonStyles.primary, ...buttonStyles.filled }}>
+         <TouchableOpacity
+            style={{ ...buttonStyles.primary, ...buttonStyles.filled }}
+            onPress={() => {
+               console.log('save image');
+            }}
+         >
             <Text style={{ ...buttonStyles.text, color: colors?.FONT_INVERSE }}>Save</Text>
          </TouchableOpacity>
       </View>
