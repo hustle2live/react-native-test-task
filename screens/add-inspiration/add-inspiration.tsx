@@ -24,7 +24,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
    const themeFonts = route?.params?.fonts;
    const imageSource = require('../../assets/no-image.jpg');
 
-   const [image, setImage] = useState<string | null>(null);
+   const [image, setImage] = useState<{ uri: string } | null>(null);
 
    const buttonStyles = StyleSheet.create({
       primary: {
