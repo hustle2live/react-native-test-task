@@ -9,7 +9,7 @@ import { ScreenBackground } from '../screen-background/screen-background';
 
 const POSITIONS = {
    LEFT: -30,
-   RIGHT: 0
+   RIGHT: 5
 } as const;
 
 type SettingProps = Pick<ThemeScreepProps, 'colors'> & {
@@ -47,16 +47,12 @@ const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProp
       }
    });
 
-   const [switcher, setSwitcher] = useState<SwitcherPositionX>(defaultStyles.switcherPositionX);
-
    const handleSwitchTheme = (): void => {
-      const switcherPositionX = switcher === POSITIONS.LEFT ? POSITIONS.RIGHT : POSITIONS.LEFT;
-
-      setSwitcher(switcherPositionX);
-      if (!onChangeTheme) {
-         throw new Error('Theme change function is undefined');
+      try {
+         onChangeTheme();
+      } catch (error) {
+         console.error(error ?? 'Theme change function is undefined');
       }
-      onChangeTheme();
    };
 
    return (
