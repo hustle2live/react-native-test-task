@@ -41,8 +41,12 @@ const RootNavigator: React.FC = () => {
 
    const screenStyles = StyleSheet.create({
       headerStyle: {
-         backgroundColor: themeContext?.theme.APP_BACKGROUND,
-         height: 46
+         backgroundColor: themeColors.APP_BACKGROUND,
+         height: 80,
+         shadowColor: '#000',
+         shadowOffset: { width: 0, height: 1 },
+         shadowOpacity: 0.8,
+         shadowRadius: 1
       },
       headerTitleStyle: {
          fontFamily: fontPrimary,
@@ -60,16 +64,19 @@ const RootNavigator: React.FC = () => {
          <NavigationContainer>
             <RootStack.Navigator initialRouteName='BottomTabsNavigator' screenOptions={screenStyles}>
                <RootStack.Screen
-                  options={{ headerShown: false, ...screenStyles }}
                   name={ROUTE_NAME.BOTTOM_TABS_NAVIGATOR}
                   initialParams={themeStyleProps}
+                  options={{
+                     headerShown: false,
+                     ...screenStyles.headerStyle
+                  }}
                >
                   {(props) => (
                      <BottomTabsNavigator
                         {...props}
                         theme={themeColors}
-                        headerStyles={screenStyles}
                         toggleTheme={handleThemeChange}
+                        headerPropsStyles={screenStyles}
                      />
                   )}
                </RootStack.Screen>
@@ -78,8 +85,8 @@ const RootNavigator: React.FC = () => {
                   name={ROUTE_NAME.ADD_INSPIRATION}
                   initialParams={themeStyleProps}
                   options={{
-                     ...screenStyles,
-                     headerTintColor: themeColors.PRIMARY
+                     headerTintColor: themeColors.PRIMARY,
+                     ...screenStyles.headerStyle
                   }}
                >
                   {(props) => <AddInspiration {...props} colors={themeColors} />}
@@ -91,3 +98,6 @@ const RootNavigator: React.FC = () => {
 };
 
 export { RootNavigator };
+
+// headerShadowVisible: false,
+// headerBackTitleVisible: false,

@@ -19,7 +19,7 @@ import { COLORS_LIGHT } from '../../constants';
 type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & Partial<ThemeScreepProps>;
 
 const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) => {
-   const isLight = colors === COLORS_LIGHT;
+   // const isLight = colors === COLORS_LIGHT;
    const themeFonts = route?.params?.fonts;
    const imageSource: { uri: string } = { uri: '../../assets/no-image.jpg' };
 
@@ -36,13 +36,11 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
          backgroundColor: colors?.APP_BACKGROUND,
          textAlign: 'center',
          alignItems: 'center'
-         // fontWeight: 400
       },
       filled: { backgroundColor: colors?.PRIMARY, color: colors?.FONT_INVERSE },
       halfSize: { flex: 1 },
       fullSize: { width: '100%' },
       text: {
-         // fontWeight: 400,
          fontStyle: 'normal',
          color: 'inherit',
          fontFamily: themeFonts?.LobsterRegular.fontFamily
@@ -55,7 +53,6 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
          padding: 10,
          textAlign: 'left',
          color: colors?.FONT_MAIN
-         // fontFamily: none
       }
    });
 
@@ -86,7 +83,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
       );
 
    return (
-      <View style={{ minWidth: '100%', minHeight: '100%', gap: 20, padding: 20, overflow: 'scroll' }}>
+      <View style={{ flex: 1, gap: 20, padding: 20 }}>
          <ScreenBackground />
 
          <ImageBackground
@@ -102,7 +99,6 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
                   ...buttonStyles.halfSize
                }}
                onPress={showAlert}
-               // onPress={() => console.log('touchable alert')}
             >
                <Text style={buttonStyles.text}>Choose Image</Text>
             </TouchableOpacity>

@@ -12,14 +12,20 @@ import { TabButton } from './button-tab';
 const Tabs = createBottomTabNavigator<BottomTabsParamList>();
 
 type HeaderStyles = {
-   headerStyles: Record<string | number, Record<string, string | number>>;
+   headerPropsStyles: Record<string | number, Record<string, any> | boolean>;
 };
 
 type NavProps = RootStackScreenProps<'BottomTabsNavigator'> &
    Pick<ThemeContextProps, 'toggleTheme' | 'theme'> &
    HeaderStyles;
 
-const BottomTabsNavigator: React.FC<NavProps> = ({ navigation, route, theme, toggleTheme, headerStyles }: NavProps) => {
+const BottomTabsNavigator: React.FC<NavProps> = ({
+   navigation,
+   route,
+   theme,
+   toggleTheme,
+   headerPropsStyles
+}: NavProps) => {
    const themeFonts = route.params.fonts;
    const colors = theme;
 
@@ -40,7 +46,7 @@ const BottomTabsNavigator: React.FC<NavProps> = ({ navigation, route, theme, tog
             },
             tabBarActiveTintColor: primaryColor,
             tabBarInactiveTintColor: secondaryColor,
-            headerTitleStyle: { fontFamily: LobsterRegular }
+            ...headerPropsStyles
          }}
       >
          <Tabs.Screen
@@ -54,15 +60,15 @@ const BottomTabsNavigator: React.FC<NavProps> = ({ navigation, route, theme, tog
                tabBarIcon: (props) => (
                   <TabButton props={{ ...props, name: 'home', size: 20, primaryColor, secondaryColor, themeFonts }} />
                ),
-               headerRight: (props) => (
-                  // <TouchableOpacity onPress={() => navigation.navigate('AddInspiration' as never)}>
+               headerRight: () => (
                   <TouchableOpacity onPress={() => navigation.navigate('AddInspiration', {})}>
                      <Ionicons name='add-circle' size={32} color={primaryColor} />
                   </TouchableOpacity>
                ),
                headerRightContainerStyle: { paddingRight: 10 },
                headerTitle: 'Find Your Inspiration',
-               ...headerStyles
+               headerTitleStyle: { fontFamily: LobsterRegular },
+               ...headerPropsStyles
             }}
          >
             {(props) => <Dashboard {...props} colors={colors} />}
@@ -77,8 +83,7 @@ const BottomTabsNavigator: React.FC<NavProps> = ({ navigation, route, theme, tog
                   <TabButton
                      props={{ ...props, name: 'settings', size: 20, primaryColor, secondaryColor, themeFonts }}
                   />
-               ),
-               ...headerStyles
+               )
             }}
          >
             {(props) => <Settings {...props} colors={colors} onChangeTheme={toggleTheme} />}
