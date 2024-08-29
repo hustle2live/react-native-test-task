@@ -16,12 +16,15 @@ import { ScreenBackground } from '../screen-background/screen-background';
 import { ThemeScreepProps } from '../../types/props-styles.type';
 import { COLORS_LIGHT } from '../../constants';
 
+import { pickImage } from '../../services/localImagePicker';
+
 type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & Partial<ThemeScreepProps>;
 
 const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) => {
-   // const isLight = colors === COLORS_LIGHT;
    const themeFonts = route?.params?.fonts;
    const imageSource = require('../../assets/no-image.jpg');
+
+   const [image, setImage] = useState<string | null>(null);
 
    const buttonStyles = StyleSheet.create({
       primary: {
@@ -65,7 +68,13 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
          [
             {
                text: 'Gallery',
-               onPress: () => console.log('Ask me later pressed'),
+               onPress: async () => {
+                  const data = await pickImage();
+                  if (data) {
+                     setImage(data);
+                  }
+                  console.log(data);
+               },
                style: 'default'
             },
             {
@@ -87,7 +96,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
          <ScreenBackground />
 
          <ImageBackground
-            source={imageSource}
+            source={image ?? imageSource}
             style={{ width: 'auto', height: 200 }}
             imageStyle={{ width: 'auto', height: '100%', objectFit: 'fill', borderRadius: 10, cursor: 'pointer' }}
          ></ImageBackground>
