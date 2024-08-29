@@ -3,8 +3,7 @@ import { View, StyleSheet, ImageBackground } from 'react-native';
 import { useTheme } from '../../hooks';
 
 const ScreenBackground = () => {
-   const imageSource: { uri: string } = { uri: '../../assets/leaf.png' };
-   // const imageSource: { uri: string } = { uri: 'C:GitHub_hustle2live\react-native-test-taskassetsleaf.png' };
+   const imageSource = require('../../assets/leaf.png');
 
    const theme = useTheme();
    const bgColor = theme?.theme.APP_BACKGROUND;

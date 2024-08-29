@@ -7,19 +7,14 @@ import { ThemeScreepProps } from '../../types/props-styles.type';
 type Props = BottomTabsScreenProps<'Dashboard'> & Partial<ThemeScreepProps>;
 
 const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
-   const imageSource: { uri: string } = { uri: '../../assets/empty-placeholder.png' };
-   // const imageSource: { uri: string } = {
-   //    uri: 'C:GitHub_hustle2live\react-native-test-taskassetsempty-placeholder.png'
-   // };
+   const imageSource = require('../../assets/empty-placeholder.png');
 
-   
    const fontPrimary = route.params.fonts?.LobsterItalic.fontFamily;
 
    const styles = StyleSheet.create({
       textStyles: {
          fontFamily: fontPrimary,
          fontSize: 20,
-         // fontWeight: 400,
          color: colors?.SECONDARY
       },
       viewStyles: {
@@ -27,12 +22,14 @@ const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
          minHeight: '100%',
          display: 'flex',
          alignItems: 'center',
-         justifyContent: 'center'
+         justifyContent: 'center',
+         textAlign: 'center'
       },
       imageContainerStyles: {
          alignSelf: 'center',
+         alignItems: 'center',
          justifyContent: 'center',
-         width: '80%',
+         width: 300,
          height: 200
       },
       imageNestedStyles: { width: '100%', height: 'auto' }

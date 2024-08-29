@@ -21,7 +21,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & Part
 const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) => {
    // const isLight = colors === COLORS_LIGHT;
    const themeFonts = route?.params?.fonts;
-   const imageSource: { uri: string } = { uri: '../../assets/no-image.jpg' };
+   const imageSource = require('../../assets/no-image.jpg');
 
    const buttonStyles = StyleSheet.create({
       primary: {
