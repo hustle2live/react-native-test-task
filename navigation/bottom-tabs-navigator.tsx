@@ -29,8 +29,8 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
    const themeFonts = route.params.fonts;
    const colors = theme;
 
-   const tabBackground = colors?.APP_BACKGROUND;
-   const primaryColor = colors?.PRIMARY;
+   const tabBackground = colors.APP_BACKGROUND;
+   const primaryColor = colors.PRIMARY;
    const secondaryColor = colors?.SECONDARY;
    const LobsterRegular = themeFonts?.LobsterRegular.fontFamily;
 

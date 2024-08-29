@@ -98,6 +98,3 @@ const RootNavigator: React.FC = () => {
 };
 
 export { RootNavigator };
-
-// headerShadowVisible: false,
-// headerBackTitleVisible: false,

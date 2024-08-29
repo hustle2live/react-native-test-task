@@ -26,20 +26,25 @@ const ScreenBackground = () => {
 
 const styles = StyleSheet.create({
    container: {
-      width: '100%',
       minWidth: '100%',
-      height: '100%',
+      minHeight: '100%',
+      width: 'auto',
+      height: 'auto',
       position: 'absolute',
       left: 0,
       top: 0,
+      right: 0,
+      bottom: 0,
       display: 'flex',
       justifyContent: 'space-between',
+      alignContent: 'space-between',
       padding: 20,
       paddingTop: 10,
-      paddingBottom: 0
+      paddingBottom: 0,
+      margin: 0
    },
    style: {
-      maxHeight: '50%',
+      maxHeight: '40%',
       width: 150,
       height: 150,
       transform: [{ rotate: '180deg' }]
