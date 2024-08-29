@@ -75,8 +75,8 @@ const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProp
 const styles = StyleSheet.create({
    container: {
       flexDirection: 'row',
-      minWidth: '100%',
-      minHeight: '100%',
+      width: '100%',
+      height: '100%',
       alignItems: 'center',
       justifyContent: 'center',
       gap: 24

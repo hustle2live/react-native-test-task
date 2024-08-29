@@ -40,13 +40,16 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
          textAlign: 'center',
          alignItems: 'center'
       },
-      filled: { backgroundColor: colors?.PRIMARY, color: colors?.FONT_INVERSE },
+      filled: {
+         backgroundColor: colors?.PRIMARY,
+         color: colors?.FONT_INVERSE
+      },
       halfSize: { flex: 1 },
       fullSize: { width: '100%' },
       text: {
          fontStyle: 'normal',
-         color: 'inherit',
-         fontFamily: themeFonts?.LobsterRegular.fontFamily
+         fontFamily: themeFonts?.LobsterRegular.fontFamily,
+         color: colors === COLORS_LIGHT ? colors?.FONT_MAIN : colors?.SECONDARY
       }
    });
 
@@ -55,7 +58,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
          height: 84,
          padding: 10,
          textAlign: 'left',
-         color: colors?.FONT_MAIN
+         color: colors === COLORS_LIGHT ? colors?.FONT_MAIN : colors?.SECONDARY
       }
    });
 
@@ -127,6 +130,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
                multiline={true}
                textAlignVertical='top'
                placeholder='Enter your quote here...'
+               placeholderTextColor={colors === COLORS_LIGHT ? colors?.FONT_MAIN : colors?.SECONDARY}
                onChangeText={(newText) => setText(newText)}
                defaultValue={text}
             />
@@ -137,7 +141,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
          </TouchableOpacity>
 
          <TouchableOpacity style={{ ...buttonStyles.primary, ...buttonStyles.filled }}>
-            <Text style={buttonStyles.text}>Save</Text>
+            <Text style={{ ...buttonStyles.text, color: colors?.FONT_INVERSE }}>Save</Text>
          </TouchableOpacity>
       </View>
    );

@@ -17,9 +17,9 @@ const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
          fontSize: 20,
          color: colors?.SECONDARY
       },
-      viewStyles: {
-         minWidth: '100%',
-         minHeight: '100%',
+      container: {
+         width: '100%',
+         height: '100%',
          display: 'flex',
          alignItems: 'center',
          justifyContent: 'center',
@@ -36,9 +36,9 @@ const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
    });
 
    return (
-      <View style={styles.viewStyles}>
+      <View style={styles.container}>
          <ScreenBackground />
-         <View style={styles.viewStyles}>
+         <View style={styles.container}>
             <ImageBackground
                source={imageSource}
                style={styles.imageContainerStyles}
