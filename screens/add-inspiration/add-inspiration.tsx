@@ -118,7 +118,13 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
 
    const handleCreateinspiration = () => {
       if (!qoute || !image) return;
-      console.warn('save image...');
+
+      // add inspiration logic
+
+      // navigation to Dashboard
+      // navigation.navigate('BottomTabsNavigator');
+
+      console.warn('saving image...');
    };
 
    return (
