@@ -21,6 +21,8 @@ import { getRandomImage } from '../../services/getRandomImage';
 import { GetImageResponseDto, GetQuoteResponseDto } from '../../types';
 import { Loader } from '../../loader/loader';
 import { getRandomQuote } from '../../services/getRandomQuote';
+import { InspirationStore } from '../../store/inspirations';
+import { ROUTE_NAME } from '../../enums';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & Partial<ThemeScreepProps>;
 
@@ -116,15 +118,12 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
 
    const imageSource = image && image.download_url ? { uri: image.download_url } : noImageBlueprint;
 
+   const isNotValid = (!text.trim() || !image) as boolean;
+
    const handleCreateinspiration = () => {
-      if (!qoute || !image) return;
-
-      // add inspiration logic
-
-      // navigation to Dashboard
-      // navigation.navigate('BottomTabsNavigator');
-
-      console.warn('saving image...');
+      const newCard = { quote: text, image_url: image?.download_url };
+      InspirationStore.add(newCard);
+      navigation.navigate(ROUTE_NAME.BOTTOM_TABS_NAVIGATOR);
    };
 
    return (
@@ -167,6 +166,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
                placeholderTextColor={colors === COLORS_LIGHT ? colors?.FONT_MAIN : colors?.SECONDARY}
                onChangeText={(newText) => setText(newText)}
                defaultValue={text}
+               value={text}
             />
          </SafeAreaView>
 
@@ -176,6 +176,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
                const newQuote = await handleGetQuote(getRandomQuote, setText);
                if (newQuote) {
                   setQoute(newQuote);
+                  setText(newQuote.quoteText);
                }
             }}
          >
@@ -184,6 +185,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
 
          <TouchableOpacity
             style={{ ...buttonStyles.primary, ...buttonStyles.filled }}
+            disabled={isNotValid ? true : false}
             onPress={() => {
                handleCreateinspiration();
             }}

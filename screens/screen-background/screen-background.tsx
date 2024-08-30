@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
       padding: 20,
       paddingTop: 10,
       paddingBottom: 0,
-      margin: 0
+      margin: 0,
    },
    style: {
       maxHeight: '40%',
