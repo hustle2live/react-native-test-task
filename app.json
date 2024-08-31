@@ -22,7 +22,9 @@
       "package": "com.hustle2live.rnlecturebase"
     },
     "web": {
-      "favicon": "./assets/coffee_cup-croped.png"
+      "favicon": "./assets/coffee_cup-croped.png",
+      "output": "server",
+      "bundler": "metro"
     },
     "plugins": [
       "expo-font"
@@ -33,7 +35,7 @@
       }
     },
     "experiments": {
-      "baseUrl": "/"
+      "baseUrl": "/react-native-test-task"
     }
   }
 }
