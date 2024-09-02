@@ -118,7 +118,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
 
    const imageSource = image && image.download_url ? { uri: image.download_url } : noImageBlueprint;
 
-   const isNotValid = (!text.trim() || !image) as boolean;
+   const isNotValid = (!text.trim() || !image);
 
    const handleCreateinspiration = () => {
       const newCard = { quote: text, image_url: image?.download_url };
@@ -165,7 +165,6 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
                placeholder='Enter your quote here...'
                placeholderTextColor={colors === COLORS_LIGHT ? colors?.FONT_MAIN : colors?.SECONDARY}
                onChangeText={(newText) => setText(newText)}
-               defaultValue={text}
                value={text}
             />
          </SafeAreaView>
@@ -185,7 +184,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
 
          <TouchableOpacity
             style={{ ...buttonStyles.primary, ...buttonStyles.filled }}
-            disabled={isNotValid ? true : false}
+            disabled={isNotValid}
             onPress={() => {
                handleCreateinspiration();
             }}
