@@ -7,7 +7,8 @@ const getRandomQuote = async (): Promise<GetQuoteResponseDto> => {
    try {
       const response = await axios.get<GetQuoteResponseDto>(API.QUOTE_URL, {
          params: { lang: 'en', format: 'json', method: 'getQuote' },
-         headers: { 'Access-Control-Allow-Origin': '*' }
+         headers: { 'Access-Control-Allow-Origin': '*' },
+         withCredentials: false
       });
       return response.data;
    } catch (error) {
