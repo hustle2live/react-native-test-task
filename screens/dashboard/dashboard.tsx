@@ -40,6 +40,7 @@ const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
                </>
             ) : (
                <FlatList
+                  style={{ width: '100%' }}
                   data={inspirationsArray}
                   ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
                   renderItem={({ item }) => {
