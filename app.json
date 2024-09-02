@@ -23,7 +23,6 @@
     },
     "web": {
       "favicon": "./assets/coffee_cup-croped.png",
-      "output": "server",
       "bundler": "metro"
     },
     "plugins": [
