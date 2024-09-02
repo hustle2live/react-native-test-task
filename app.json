@@ -22,10 +22,13 @@
       "package": "com.hustle2live.rnlecturebase"
     },
     "web": {
-      "favicon": "./assets/coffee_cup-croped.png"
+      "favicon": "./assets/coffee_cup-croped.png",
+      "output": "server",
+      "bundler": "metro"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-router"
     ],
     "extra": {
       "eas": {
@@ -37,4 +40,3 @@
     }
   }
 }
-
