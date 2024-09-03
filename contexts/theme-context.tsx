@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, ReactNode, useMemo } from 'react';
+import React, { createContext, useState, useEffect, ReactNode, useMemo, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Font from 'expo-font';
@@ -34,47 +34,51 @@ const fontStyles: FontStyleType = StyleSheet.create({
    }
 });
 
+const LocalStorageTheme = async (): Promise<ThemeType | null> => {
+   const result = await AsyncStorage.getItem('theme');
+   if (result) {
+      const savedTheme: ThemeType = JSON.parse(result);
+      return savedTheme;
+   }
+   return null;
+};
+
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-   const [theme, setTheme] = useState<ThemeType>(COLORS_LIGHT);
+   const [theme, setTheme] = useState<ThemeType | null>(null);
    const [isLoaded, setIsLoaded] = useState(false);
+   const [fontsLoaded, setFontsLoaded] = useState(false);
 
-   const [resolve, reject] = [() => setIsLoaded(true), (msg: string) => console.warn(msg)];
-   const Prepare = async () => {
-      useFonts(resolve, reject);
+   const PrepareFonts = async () => {
+      await useFonts(setFontsLoaded, console.warn);
    };
+
+   const PrepareTheme = async () => {
+      const savedTheme = await LocalStorageTheme();
+      savedTheme ? setTheme(savedTheme) : setTheme(COLORS_LIGHT);
+   };
+
    useEffect(() => {
-      setTimeout(Prepare, 1300);
-   }, []);
-
-   if (!isLoaded) {
-      return <Loader color='#c86822' background='#fae8c0' />;
-   }
-
-   // ----------------------------------
-   // Add logic to retrieve theme from AsyncStorage here
-
-   // useEffect(() => {
-   //    const checkForTheme = async <ThemeType | undefined>() => {
-   //       const currentTheme: string | undefined = await AsyncStorage.getItem('theme');
-
-   //       if (currentTheme) {
-   //          setTheme(currentTheme);
-   //       }
-   //    };
-   // }, []);
-
-   // Add logic to toggle theme here
+      PrepareFonts();
+      PrepareTheme();
+      setTimeout(() => {
+         if (fontsLoaded && theme) setIsLoaded(true);
+      }, 1000);
+   }, [fontsLoaded]);
 
    const toggleTheme = async () => {
       const newTheme = theme === COLORS_LIGHT ? COLORS_DARK : COLORS_LIGHT;
       setTheme(newTheme);
    };
 
+   if (!isLoaded) {
+      return <Loader color='#c86822' background='#fae8c0' />;
+   }
+
    const themeProps = { theme, toggleTheme, fonts: fontStyles };
 
    return <ThemeContext.Provider value={themeProps}>{children}</ThemeContext.Provider>;
 };
 
-export { ThemeProvider, ThemeContext, type FontStyleType, type ThemeContextProps, type ThemeType };
+export { ThemeProvider, ThemeContext, LocalStorageTheme, type FontStyleType, type ThemeContextProps, type ThemeType };

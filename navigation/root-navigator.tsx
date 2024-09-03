@@ -8,7 +8,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { BottomTabsNavigator } from './bottom-tabs-navigator';
 
 import { RootStackParamList } from '../types';
-import { ThemeContextProps } from '../contexts/theme-context';
+import { LocalStorageTheme, ThemeContextProps } from '../contexts/theme-context';
 import { ROUTE_NAME } from '../enums';
 import { useTheme } from '../hooks';
 import { AddInspiration } from '../screens';
@@ -19,12 +19,12 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 SplashScreen.preventAutoHideAsync();
 
-const RootNavigator: React.FC = () => {
-   const themeContext: ThemeContextProps | undefined = useTheme();
-
+const RootNavigator = () => {
    const onLayoutRootView = useCallback(async () => {
       await SplashScreen.hideAsync();
    }, []);
+
+   const themeContext: ThemeContextProps | undefined = useTheme();
 
    if (!themeContext?.theme) {
       // return <Loader color='#c86822' background='#fae8c0' />;
