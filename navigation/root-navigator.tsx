@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -8,30 +8,33 @@ import * as SplashScreen from 'expo-splash-screen';
 import { BottomTabsNavigator } from './bottom-tabs-navigator';
 
 import { RootStackParamList } from '../types';
-import { LocalStorageTheme, ThemeContextProps } from '../contexts/theme-context';
+import { ThemeContextProps } from '../contexts/theme-context';
 import { ROUTE_NAME } from '../enums';
 import { useTheme } from '../hooks';
 import { AddInspiration } from '../screens';
-import { View, StyleSheet } from 'react-native';
-import { Loader } from '../loader/loader';
+import { StyleSheet } from 'react-native';
+
+const preventAutoHide = () => {
+   SplashScreen.preventAutoHideAsync();
+};
+
+preventAutoHide();
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
-SplashScreen.preventAutoHideAsync();
-
 const RootNavigator = () => {
+   const themeContext: ThemeContextProps | undefined = useTheme();
    const onLayoutRootView = useCallback(async () => {
       await SplashScreen.hideAsync();
    }, []);
 
-   const themeContext: ThemeContextProps | undefined = useTheme();
+   preventAutoHide();
 
    if (!themeContext?.theme) {
-      // return <Loader color='#c86822' background='#fae8c0' />;
       return null;
+   } else {
+      onLayoutRootView();
    }
-
-   onLayoutRootView();
 
    const fontPrimary = themeContext.fonts.LobsterRegular.fontFamily;
 

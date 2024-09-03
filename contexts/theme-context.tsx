@@ -1,17 +1,12 @@
-import React, { createContext, useState, useEffect, ReactNode, useMemo, useCallback } from 'react';
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
 
 import { COLORS_LIGHT, COLORS_DARK, FONTS } from '../constants';
 import { ThemeContextProps } from '../types/props-styles.type';
 import { useFonts } from '../hooks/use-fonts';
 
-import * as SplashScreen from 'expo-splash-screen';
 import { Loader } from '../loader/loader';
-
-// import { useFonts } from 'expo-font';
 
 type ThemeType = typeof COLORS_LIGHT | typeof COLORS_DARK;
 
