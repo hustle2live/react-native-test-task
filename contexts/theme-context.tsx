@@ -10,6 +10,11 @@ import { Loader } from '../loader/loader';
 
 type ThemeType = typeof COLORS_LIGHT | typeof COLORS_DARK;
 
+const ThemeMark = {
+   DARK: 'DARK',
+   LIGHT: 'LIGHT'
+} as const;
+
 type FontStyleType = Record<
    string,
    {
@@ -18,27 +23,16 @@ type FontStyleType = Record<
    }
 >;
 
-const fontStyles: FontStyleType = StyleSheet.create({
-   LobsterRegular: {
-      fontSize: 20,
-      fontFamily: FONTS.LOBSTER_REGULAR
-   },
-   LobsterItalic: {
-      fontSize: 20,
-      fontFamily: FONTS.LOBSTER_ITALIC
-   }
-});
-
-const LocalStorageTheme = async (): Promise<ThemeType | null> => {
+const LocalStorageTheme = async (): Promise<keyof typeof ThemeMark | null> => {
    const result = await AsyncStorage.getItem('theme');
    if (result) {
-      const savedTheme: ThemeType = JSON.parse(result);
+      const savedTheme = JSON.parse(result);
       return savedTheme;
    }
    return null;
 };
 
-const SaveStorageTheme = async (theme: ThemeType): Promise<void> => {
+const SaveStorageTheme = async (theme: keyof typeof ThemeMark): Promise<void> => {
    AsyncStorage.setItem('theme', JSON.stringify(theme));
 };
 
@@ -55,7 +49,11 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
    const PrepareTheme = async () => {
       const savedTheme = await LocalStorageTheme();
-      savedTheme ? setTheme(savedTheme) : setTheme(COLORS_LIGHT);
+      if (savedTheme === ThemeMark.DARK) {
+         setTheme(COLORS_DARK);
+      } else {
+         setTheme(COLORS_LIGHT);
+      }
    };
 
    useEffect(() => {
@@ -69,8 +67,13 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
    }, [fontsLoaded]);
 
    useEffect(() => {
-      if (theme) {
-         SaveStorageTheme(theme);
+      switch (theme) {
+         case COLORS_DARK:
+            SaveStorageTheme(ThemeMark.DARK);
+            break;
+         case COLORS_LIGHT:
+            SaveStorageTheme(ThemeMark.LIGHT);
+            break;
       }
    }, [theme]);
 
@@ -88,9 +91,25 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
    return <ThemeContext.Provider value={themeProps}>{children}</ThemeContext.Provider>;
 };
 
+const fontStyles: FontStyleType = StyleSheet.create({
+   LobsterRegular: {
+      fontSize: 20,
+      fontFamily: FONTS.LOBSTER_REGULAR
+   },
+   LobsterItalic: {
+      fontSize: 20,
+      fontFamily: FONTS.LOBSTER_ITALIC
+   }
+});
+
 export { ThemeProvider, ThemeContext, LocalStorageTheme, type FontStyleType, type ThemeContextProps, type ThemeType };
 
 // const InitialTheme = () => async () => {
 //    const savedTheme = await LocalStorageTheme();
 //    return savedTheme || COLORS_LIGHT;
 // };
+
+// enum ThemeMark {
+//    DARK = 'DARK',
+//    LIGHT = 'LIGHT'
+// }
