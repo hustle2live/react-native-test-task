@@ -1,3 +1,2 @@
-export { COLORS_DARK, COLORS_LIGHT } from './colors';
-export { FONTS } from './fonts';
-
+export { COLORS_DARK, COLORS_LIGHT, ThemeMark } from './colors';
+export { FONTS, type FontStyleType } from './fonts';

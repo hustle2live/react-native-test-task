@@ -1,40 +1,14 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { COLORS_LIGHT, COLORS_DARK, FONTS } from '../constants';
+import { COLORS_LIGHT, COLORS_DARK, FONTS, ThemeMark, FontStyleType } from '../constants';
 import { ThemeContextProps } from '../types/props-styles.type';
 import { useFonts } from '../hooks/use-fonts';
+import { getLocalStorageTheme, saveStorageTheme } from '../services/themeStorageHandler';
 
 import { Loader } from '../loader/loader';
 
 type ThemeType = typeof COLORS_LIGHT | typeof COLORS_DARK;
-
-const ThemeMark = {
-   DARK: 'DARK',
-   LIGHT: 'LIGHT'
-} as const;
-
-type FontStyleType = Record<
-   string,
-   {
-      fontSize: number;
-      fontFamily: string;
-   }
->;
-
-const LocalStorageTheme = async (): Promise<keyof typeof ThemeMark | null> => {
-   const result = await AsyncStorage.getItem('theme');
-   if (result) {
-      const savedTheme = JSON.parse(result);
-      return savedTheme;
-   }
-   return null;
-};
-
-const SaveStorageTheme = async (theme: keyof typeof ThemeMark): Promise<void> => {
-   AsyncStorage.setItem('theme', JSON.stringify(theme));
-};
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
@@ -48,7 +22,7 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
    };
 
    const PrepareTheme = async () => {
-      const savedTheme = await LocalStorageTheme();
+      const savedTheme = await getLocalStorageTheme();
       if (savedTheme === ThemeMark.DARK) {
          setTheme(COLORS_DARK);
       } else {
@@ -69,10 +43,10 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
    useEffect(() => {
       switch (theme) {
          case COLORS_DARK:
-            SaveStorageTheme(ThemeMark.DARK);
+            saveStorageTheme(ThemeMark.DARK);
             break;
          case COLORS_LIGHT:
-            SaveStorageTheme(ThemeMark.LIGHT);
+            saveStorageTheme(ThemeMark.LIGHT);
             break;
       }
    }, [theme]);
@@ -102,14 +76,4 @@ const fontStyles: FontStyleType = StyleSheet.create({
    }
 });
 
-export { ThemeProvider, ThemeContext, LocalStorageTheme, type FontStyleType, type ThemeContextProps, type ThemeType };
-
-// const InitialTheme = () => async () => {
-//    const savedTheme = await LocalStorageTheme();
-//    return savedTheme || COLORS_LIGHT;
-// };
-
-// enum ThemeMark {
-//    DARK = 'DARK',
-//    LIGHT = 'LIGHT'
-// }
+export { ThemeProvider, ThemeContext, type FontStyleType, type ThemeContextProps, type ThemeType };

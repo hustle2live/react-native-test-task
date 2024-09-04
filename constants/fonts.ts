@@ -3,4 +3,12 @@ const FONTS = {
    LOBSTER_ITALIC: 'LobsterTwo-Italic'
 } as const;
 
-export { FONTS };
+type FontStyleType = Record<
+   string,
+   {
+      fontSize: number;
+      fontFamily: string;
+   }
+>;
+
+export { FONTS, type FontStyleType };
