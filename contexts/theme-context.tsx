@@ -38,6 +38,10 @@ const LocalStorageTheme = async (): Promise<ThemeType | null> => {
    return null;
 };
 
+const SaveStorageTheme = async (theme: ThemeType): Promise<void> => {
+   AsyncStorage.setItem('theme', JSON.stringify(theme));
+};
+
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -58,18 +62,26 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       PrepareFonts();
       PrepareTheme();
       setTimeout(() => {
-         if (fontsLoaded && theme) setIsLoaded(true);
+         if (fontsLoaded && theme) {
+            setIsLoaded(true);
+         }
       }, 1000);
    }, [fontsLoaded]);
+
+   useEffect(() => {
+      if (theme) {
+         SaveStorageTheme(theme);
+      }
+   }, [theme]);
+
+   if (!isLoaded) {
+      return <Loader color='#c86822' background='#fae8c0' />;
+   }
 
    const toggleTheme = async () => {
       const newTheme = theme === COLORS_LIGHT ? COLORS_DARK : COLORS_LIGHT;
       setTheme(newTheme);
    };
-
-   if (!isLoaded) {
-      return <Loader color='#c86822' background='#fae8c0' />;
-   }
 
    const themeProps = { theme, toggleTheme, fonts: fontStyles };
 
@@ -77,3 +89,8 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 };
 
 export { ThemeProvider, ThemeContext, LocalStorageTheme, type FontStyleType, type ThemeContextProps, type ThemeType };
+
+// const InitialTheme = () => async () => {
+//    const savedTheme = await LocalStorageTheme();
+//    return savedTheme || COLORS_LIGHT;
+// };
