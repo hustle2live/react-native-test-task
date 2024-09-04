@@ -35,8 +35,6 @@ const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProp
          switcherLine: colors.SECONDARY,
          switcherPositionX: POSITIONS.RIGHT
       });
-      console.log('is not light');
-      console.log(defaultStyles);
    }
 
    const activeStyles = StyleSheet.create({

@@ -52,7 +52,8 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
          <Tabs.Screen
             name={ROUTE_NAME.DASHBOARD}
             initialParams={{
-               fonts: themeFonts
+               fonts: themeFonts,
+               // onpress: () => navigation.push()
             }}
             options={{
                tabBarLabelStyle: { fontFamily: LobsterRegular, fontSize: 13, fontWeight: '400' },

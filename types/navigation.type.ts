@@ -20,7 +20,6 @@ type BottomTabsParamList = {
       inspiration?: Inspiration;
       onpress?: () => void;
    };
-
    [ROUTE_NAME.SETTINGS]: undefined;
 };
 
