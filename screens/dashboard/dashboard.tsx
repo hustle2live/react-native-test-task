@@ -6,7 +6,6 @@ import { ThemeScreepProps } from '../../types/props-styles.type';
 
 import { InspirationStore } from '../../store/inspirations';
 import { Inspiration } from '../../types';
-import { opacity } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
 
 type Props = BottomTabsScreenProps<'Dashboard'> & Partial<ThemeScreepProps>;
 
