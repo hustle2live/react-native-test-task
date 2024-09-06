@@ -87,7 +87,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
          borderRadius: 6,
          borderWidth: 1,
          fontSize: 14,
-         fontFamily: themeFonts?.LobsterRegular.fontFamily,
+         fontFamily: themeFonts?.LOBSTER_REGULAR.fontFamily,
          color: colors?.PRIMARY,
          borderColor: colors?.PRIMARY,
          backgroundColor: colors?.APP_BACKGROUND,
@@ -102,7 +102,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
       fullSize: { width: '100%' },
       text: {
          fontStyle: 'normal',
-         fontFamily: themeFonts?.LobsterRegular.fontFamily,
+         fontFamily: themeFonts?.LOBSTER_REGULAR.fontFamily,
          color: colors === COLORS_LIGHT ? colors?.FONT_MAIN : colors?.SECONDARY
       }
    });

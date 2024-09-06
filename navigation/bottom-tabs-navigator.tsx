@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Dashboard, Settings } from '../screens';
 import { Ionicons } from '@expo/vector-icons';
 import { ROUTE_NAME } from '../enums';
-import { BottomTabsParamList, RootStackScreenProps } from '../types';
+import { BottomTabsParamList, Inspiration, RootStackScreenProps } from '../types';
 import { ThemeContextProps } from '../types/props-styles.type';
 import { TabButton } from './button-tab';
 
@@ -17,14 +17,15 @@ type HeaderStyles = {
 
 type NavProps = RootStackScreenProps<'BottomTabsNavigator'> &
    Pick<ThemeContextProps, 'toggleTheme' | 'theme'> &
-   HeaderStyles;
+   HeaderStyles & { inspirationCards: Inspiration[] };
 
 const BottomTabsNavigator: React.FC<NavProps> = ({
    navigation,
    route,
    theme,
    toggleTheme,
-   headerPropsStyles
+   headerPropsStyles,
+   inspirationCards
 }: NavProps) => {
    const themeFonts = route.params.fonts;
    const colors = theme;
@@ -32,7 +33,7 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
    const tabBackground = colors.APP_BACKGROUND;
    const primaryColor = colors.PRIMARY;
    const secondaryColor = colors?.SECONDARY;
-   const LobsterRegular = themeFonts?.LobsterRegular.fontFamily;
+   const LobsterRegular = themeFonts?.LOBSTER_REGULAR.fontFamily;
 
    return (
       <Tabs.Navigator
@@ -53,7 +54,8 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
             name={ROUTE_NAME.DASHBOARD}
             initialParams={{
                fonts: themeFonts,
-               // onpress: () => navigation.push()
+               inspiration: inspirationCards,
+               onpress: () => {}
             }}
             options={{
                tabBarLabelStyle: { fontFamily: LobsterRegular, fontSize: 13, fontWeight: '400' },

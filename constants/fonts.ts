@@ -4,7 +4,7 @@ const FONTS = {
 } as const;
 
 type FontStyleType = Record<
-   string,
+   keyof typeof FONTS,
    {
       fontSize: number;
       fontFamily: string;

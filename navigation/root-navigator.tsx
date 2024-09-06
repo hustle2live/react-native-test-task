@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -7,7 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import { BottomTabsNavigator } from './bottom-tabs-navigator';
 
-import { RootStackParamList } from '../types';
+import { Inspiration, RootStackParamList } from '../types';
 import { ThemeContextProps } from '../contexts/theme-context';
 import { ROUTE_NAME } from '../enums';
 import { useTheme } from '../hooks';
@@ -28,15 +28,16 @@ const RootNavigator = () => {
       await SplashScreen.hideAsync();
    }, []);
 
-   preventAutoHide();
+   const [cards, setCards] = useState<Inspiration[]>([] as Inspiration[]);
 
+   preventAutoHide();
    if (!themeContext?.theme) {
       return null;
    } else {
       onLayoutRootView();
    }
 
-   const fontPrimary = themeContext.fonts.LobsterRegular.fontFamily;
+   const fontPrimary = themeContext.fonts.LOBSTER_REGULAR.fontFamily;
 
    const themeColors = themeContext.theme;
    const themeFonts = themeContext.fonts;
@@ -80,13 +81,20 @@ const RootNavigator = () => {
                         theme={themeColors}
                         toggleTheme={handleThemeChange}
                         headerPropsStyles={screenStyles}
+                        inspirationCards={cards}
                      />
                   )}
                </RootStack.Screen>
 
                <RootStack.Screen
                   name={ROUTE_NAME.ADD_INSPIRATION}
-                  initialParams={themeStyleProps}
+                  initialParams={{
+                     ...themeStyleProps,
+                     onpress: (card: Inspiration) => {
+                        const cardsArray = [...cards, card];
+                        setCards(cardsArray);
+                     }
+                  }}
                   options={{
                      headerTintColor: themeColors.PRIMARY,
                      ...screenStyles.headerStyle

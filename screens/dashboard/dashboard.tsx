@@ -6,23 +6,24 @@ import { ThemeScreepProps } from '../../types/props-styles.type';
 
 import { InspirationStore } from '../../store/inspirations';
 import { Inspiration } from '../../types';
+import { InspirationCard } from '../../components/inspiration-card/inspiration-card';
 
 type Props = BottomTabsScreenProps<'Dashboard'> & Partial<ThemeScreepProps>;
 
 const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
    const imageSource = require('../../assets/empty-placeholder.png');
-
-   const fontPrimary = route.params.fonts?.LobsterItalic.fontFamily;
-
+   const fonts = route.params.fonts;
    const themeStyles = StyleSheet.create({
       textStyles: {
-         fontFamily: fontPrimary,
+         fontFamily: fonts.LOBSTER_ITALIC.fontFamily,
          fontSize: 20,
          color: colors?.SECONDARY
       }
    });
 
    const inspirationsArray: Inspiration[] = InspirationStore.getAll();
+
+   const inspirationParamsArray: Inspiration | Inspiration[] | undefined = route.params?.inspiration;
 
    return (
       <View style={styles.container}>
@@ -42,54 +43,7 @@ const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
                   style={{ width: '100%' }}
                   data={inspirationsArray}
                   ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-                  renderItem={({ item }) => {
-                     return (
-                        <View
-                           style={{
-                              minWidth: '100%',
-                              width: '100%',
-                              height: 200,
-                              backgroundColor: colors?.APP_BACKGROUND,
-                              justifyContent: 'center',
-                              position: 'relative'
-                           }}
-                        >
-                           <Image
-                              style={{
-                                 minWidth: '100%',
-                                 width: '100%',
-                                 height: '100%',
-                                 opacity: 0.7,
-                                 borderRadius: 10
-                              }}
-                              source={{ uri: item.image_url }}
-                           />
-                           <View
-                              style={{
-                                 width: '84%',
-                                 minHeight: '50%',
-                                 height: 'auto',
-                                 position: 'absolute',
-                                 backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                 alignSelf: 'center',
-                                 justifyContent: 'center',
-                                 padding: 10,
-                                 borderRadius: 6
-                              }}
-                           >
-                              <Text
-                                 style={{
-                                    fontFamily: fontPrimary,
-                                    fontSize: 16,
-                                    color: colors?.FONT_INVERSE
-                                 }}
-                              >
-                                 {item.quote}
-                              </Text>
-                           </View>
-                        </View>
-                     );
-                  }}
+                  renderItem={({ item }) => <InspirationCard colors={colors} fonts={fonts} item={item} />}
                />
             )}
          </View>

@@ -66,11 +66,11 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 };
 
 const fontStyles: FontStyleType = StyleSheet.create({
-   LobsterRegular: {
+   LOBSTER_REGULAR: {
       fontSize: 20,
       fontFamily: FONTS.LOBSTER_REGULAR
    },
-   LobsterItalic: {
+   LOBSTER_ITALIC: {
       fontSize: 20,
       fontFamily: FONTS.LOBSTER_ITALIC
    }
