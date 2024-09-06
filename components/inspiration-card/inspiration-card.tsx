@@ -46,11 +46,11 @@ const InspirationCard = ({ colors, fonts, item }: Props) => {
                   color: colors?.FONT_INVERSE
                }}
             >
-               {item.quote}
+               {item.quote ?? ''}
             </Text>
          </View>
       </View>
    );
 };
 
-export {InspirationCard};
+export { InspirationCard };

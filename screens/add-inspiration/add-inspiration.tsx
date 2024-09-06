@@ -23,6 +23,7 @@ import { Loader } from '../../loader/loader';
 import { getRandomQuote } from '../../services/getRandomQuote';
 import { InspirationStore } from '../../store/inspirations';
 import { ROUTE_NAME } from '../../enums';
+import { InspirationCard } from '../../components/inspiration-card/inspiration-card';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & Partial<ThemeScreepProps>;
 
@@ -118,10 +119,14 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
 
    const imageSource = image && image.download_url ? { uri: image.download_url } : noImageBlueprint;
 
-   const isNotValid = (!text.trim() || !image);
+   const isNotValid = !text.trim() || !image;
+
+   const createCard = () => {
+      return { quote: text, image_url: image?.download_url };
+   };
 
    const handleCreateinspiration = () => {
-      const newCard = { quote: text, image_url: image?.download_url };
+      const newCard = createCard();
       InspirationStore.add(newCard);
       navigation.navigate(ROUTE_NAME.BOTTOM_TABS_NAVIGATOR);
    };
@@ -130,11 +135,15 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
       <View style={{ flex: 1, gap: 20, padding: 20 }}>
          <ScreenBackground />
 
-         <ImageBackground
-            source={imageSource}
-            style={{ width: 'auto', height: 200 }}
-            imageStyle={{ width: 'auto', height: '100%', objectFit: 'fill', borderRadius: 10, cursor: 'pointer' }}
-         ></ImageBackground>
+         {!image ? (
+            <ImageBackground
+               source={imageSource}
+               style={{ width: 'auto', height: 200 }}
+               imageStyle={{ width: 'auto', height: '100%', objectFit: 'fill', borderRadius: 10, cursor: 'pointer' }}
+            ></ImageBackground>
+         ) : (
+            <InspirationCard colors={colors} fonts={themeFonts} item={createCard()} />
+         )}
 
          <View style={{ display: 'flex', flexDirection: 'row', width: '100%', gap: 20 }}>
             <TouchableOpacity
