@@ -190,7 +190,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
          </TouchableOpacity>
 
          <TouchableOpacity
-            style={{ ...buttonStyles.primary, ...buttonStyles.filled }}
+            style={{ ...buttonStyles.primary, ...buttonStyles.filled, opacity: isNotValid ? 0.5 : 1 }}
             disabled={isNotValid}
             onPress={() => {
                handleCreateinspiration();
