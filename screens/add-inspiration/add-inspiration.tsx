@@ -79,7 +79,6 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
 
    const [text, setText] = useState<string>('');
    const [image, setImage] = useState<GetImageResponseDto | null>(null);
-   const [qoute, setQoute] = useState<GetQuoteResponseDto | null>(null);
 
    const buttonStyles = StyleSheet.create({
       primary: {
@@ -183,7 +182,6 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
             onPress={async () => {
                const newQuote = await handleGetQuote(getRandomQuote, setText);
                if (newQuote) {
-                  setQoute(newQuote);
                   setText(newQuote.quoteText);
                }
             }}

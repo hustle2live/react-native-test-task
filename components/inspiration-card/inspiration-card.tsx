@@ -21,34 +21,39 @@ const InspirationCard = ({ colors, fonts, item }: Props) => {
                minWidth: '100%',
                width: '100%',
                height: '100%',
+               overflow: 'hidden',
                opacity: 0.7,
                borderRadius: 10
             }}
             source={{ uri: item.image_url }}
          />
-         <View
-            style={{
-               width: '84%',
-               minHeight: '50%',
-               height: 'auto',
-               position: 'absolute',
-               backgroundColor: 'rgba(0, 0, 0, 0.5)',
-               alignSelf: 'center',
-               justifyContent: 'center',
-               padding: 10,
-               borderRadius: 6
-            }}
-         >
-            <Text
+         {item.quote ? (
+            <View
                style={{
-                  fontFamily: fonts?.LOBSTER_ITALIC.fontFamily,
-                  fontSize: 16,
-                  color: colors?.FONT_INVERSE
+                  width: '84%',
+                  minHeight: '50%',
+                  height: 'auto',
+                  maxHeight: '100%',
+                  position: 'absolute',
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                  alignSelf: 'center',
+                  justifyContent: 'center',
+                  padding: 10,
+                  borderRadius: 6
                }}
             >
-               {item.quote ?? ''}
-            </Text>
-         </View>
+               <Text
+                  style={{
+                     fontFamily: fonts?.LOBSTER_ITALIC.fontFamily,
+                     fontSize: 16,
+                     color: colors?.FONT_INVERSE,
+                     overflow: 'hidden'
+                  }}
+               >
+                  {item.quote}
+               </Text>
+            </View>
+         ) : null}
       </View>
    );
 };
