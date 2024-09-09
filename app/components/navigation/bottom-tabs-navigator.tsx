@@ -12,10 +12,6 @@ import { TabButton } from './button-tab';
 
 const Tabs = createBottomTabNavigator<BottomTabsParamList>();
 
-// type HeaderStyles = {
-//    headerPropsStyles: Record<string | number, Record<string, any> | boolean>;
-// };
-
 type HeaderStyles = {
    headerPropsStyles: {
       headerStyle: Record<string, any>;
@@ -53,8 +49,7 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
                height: 50
             },
             tabBarActiveTintColor: primaryColor,
-            tabBarInactiveTintColor: secondaryColor,
-            ...headerPropsStyles
+            tabBarInactiveTintColor: secondaryColor
          }}
       >
          <Tabs.Screen
@@ -75,8 +70,7 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
                ),
                headerRightContainerStyle: { paddingRight: 10 },
                headerTitle: 'Find Your Inspiration',
-               ...headerPropsStyles.headerStyle
-               // headerTitleStyle: { fontFamily: LobsterRegular },
+               ...headerPropsStyles
             }}
          >
             {(props) => <Dashboard {...props} colors={colors} />}
@@ -92,7 +86,7 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
                      props={{ ...props, name: 'settings', size: 20, primaryColor, secondaryColor, themeFonts }}
                   />
                ),
-               ...headerPropsStyles.headerStyle
+               ...headerPropsStyles
             }}
          >
             {(props) => <Settings {...props} colors={colors} onChangeTheme={toggleTheme} />}

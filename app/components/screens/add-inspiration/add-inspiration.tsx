@@ -28,7 +28,6 @@ import { ScreenBackground } from '../screen-background/screen-background';
 type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & ThemeScreepProps;
 
 const AddInspiration: React.FC<Props> = ({ navigation, colors, fonts }: Props) => {
-   const themeFonts = fonts;
    const noImageBlueprint = require('../../../assets/no-image.jpg');
 
    const [text, setText] = useState<string>('');
@@ -41,7 +40,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, colors, fonts }: Props) =
          borderRadius: 6,
          borderWidth: 1,
          fontSize: 14,
-         fontFamily: themeFonts?.LOBSTER_REGULAR.fontFamily,
+         fontFamily: fonts.LOBSTER_REGULAR.fontFamily,
          color: colors?.PRIMARY,
          borderColor: colors?.PRIMARY,
          backgroundColor: colors?.APP_BACKGROUND,
@@ -56,7 +55,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, colors, fonts }: Props) =
       fullSize: { width: '100%' },
       text: {
          fontStyle: 'normal',
-         fontFamily: themeFonts?.LOBSTER_REGULAR.fontFamily,
+         fontFamily: fonts.LOBSTER_REGULAR.fontFamily,
          color: colors === COLORS_LIGHT ? colors?.FONT_MAIN : colors?.SECONDARY
       }
    });
@@ -127,7 +126,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, colors, fonts }: Props) =
                imageStyle={{ width: 'auto', height: '100%', objectFit: 'fill', borderRadius: 10, cursor: 'pointer' }}
             ></ImageBackground>
          ) : (
-            <InspirationCard colors={colors} fonts={themeFonts} item={createCard()} />
+            <InspirationCard colors={colors} fonts={fonts} item={createCard()} />
          )}
 
          <View style={{ display: 'flex', flexDirection: 'row', width: '100%', gap: 20 }}>
@@ -170,7 +169,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, colors, fonts }: Props) =
             onPress={() => {
                navigation.navigate('BottomTabsNavigator', {
                   screen: 'Dashboard',
-                  params: { inspiration: createCard(), fonts: themeFonts }
+                  params: { inspiration: createCard(), fonts: fonts }
                });
             }}
          >

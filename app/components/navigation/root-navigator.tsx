@@ -43,7 +43,9 @@ const RootNavigator = () => {
    const screenStyles = StyleSheet.create({
       headerStyle: {
          backgroundColor: themeColors.APP_BACKGROUND,
-         height: 80,
+         minHeight: 60,
+         maxHeight: 60,
+         height: 60,
          shadowColor: '#000',
          shadowOffset: { width: 0, height: 1 },
          shadowOpacity: 0.8,
@@ -68,8 +70,7 @@ const RootNavigator = () => {
                   name={ROUTE_NAME.BOTTOM_TABS_NAVIGATOR}
                   initialParams={themeStyleProps}
                   options={{
-                     headerShown: false,
-                     ...screenStyles.headerStyle
+                     headerShown: false
                   }}
                >
                   {(props) => (
@@ -86,7 +87,7 @@ const RootNavigator = () => {
                   name={ROUTE_NAME.ADD_INSPIRATION}
                   options={{
                      headerTintColor: themeColors.PRIMARY,
-                     ...screenStyles.headerStyle
+                     ...screenStyles
                   }}
                >
                   {(props) => <AddInspiration {...props} colors={themeColors} fonts={themeFonts} />}
