@@ -47,6 +47,7 @@ const InspirationCard: React.FC<Props> = ({ colors, fonts, item }: Props) => {
                   style={{
                      fontFamily: fonts?.LOBSTER_ITALIC.fontFamily,
                      fontSize: 16,
+                     fontWeight: '400',
                      color: colors?.FONT_INVERSE,
                      overflow: 'hidden'
                   }}
