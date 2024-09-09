@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -15,8 +15,6 @@ const POSITIONS = {
 type SettingProps = Pick<ThemeScreepProps, 'colors'> & {
    onChangeTheme: () => void | undefined;
 };
-
-// type SwitcherPositionX = (typeof POSITIONS)[keyof typeof POSITIONS];
 
 const Settings: React.FC<SettingProps> = ({ colors, onChangeTheme }: SettingProps) => {
    const isLight = colors === COLORS_LIGHT;

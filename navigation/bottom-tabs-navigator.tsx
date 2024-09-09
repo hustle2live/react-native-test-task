@@ -8,6 +8,7 @@ import { ROUTE_NAME } from '../enums';
 import { BottomTabsParamList, Inspiration, RootStackScreenProps } from '../types';
 import { ThemeContextProps } from '../types/props-styles.type';
 import { TabButton } from './button-tab';
+import { RootNavigator } from './root-navigator';
 
 const Tabs = createBottomTabNavigator<BottomTabsParamList>();
 
@@ -17,15 +18,14 @@ type HeaderStyles = {
 
 type NavProps = RootStackScreenProps<'BottomTabsNavigator'> &
    Pick<ThemeContextProps, 'toggleTheme' | 'theme'> &
-   HeaderStyles & { inspirationCards: Inspiration[] };
+   HeaderStyles;
 
 const BottomTabsNavigator: React.FC<NavProps> = ({
    navigation,
    route,
    theme,
    toggleTheme,
-   headerPropsStyles,
-   inspirationCards
+   headerPropsStyles
 }: NavProps) => {
    const themeFonts = route.params.fonts;
    const colors = theme;
@@ -53,9 +53,7 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
          <Tabs.Screen
             name={ROUTE_NAME.DASHBOARD}
             initialParams={{
-               fonts: themeFonts,
-               inspiration: inspirationCards,
-               onpress: () => {}
+               fonts: themeFonts
             }}
             options={{
                tabBarLabelStyle: { fontFamily: LobsterRegular, fontSize: 13, fontWeight: '400' },
@@ -64,7 +62,7 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
                   <TabButton props={{ ...props, name: 'home', size: 20, primaryColor, secondaryColor, themeFonts }} />
                ),
                headerRight: () => (
-                  <TouchableOpacity onPress={() => navigation.navigate('AddInspiration', {})}>
+                  <TouchableOpacity onPress={() => navigation.navigate(ROUTE_NAME.ADD_INSPIRATION)}>
                      <Ionicons name='add-circle' size={32} color={primaryColor} />
                   </TouchableOpacity>
                ),

@@ -10,14 +10,16 @@ type NavigationRoute = (typeof ROUTE_NAME)[keyof typeof ROUTE_NAME];
 
 type RootStackParamList = {
    [ROUTE_NAME.BOTTOM_TABS_NAVIGATOR]: NavigatorScreenParams<BottomTabsParamList> & Partial<ThemeScreepProps>;
-   [ROUTE_NAME.ADD_INSPIRATION]: Partial<ThemeScreepProps> & {
-      onpress?: (card: Inspiration) => void;
-   };
+   [ROUTE_NAME.ADD_INSPIRATION]:
+      | {
+           onpress?: () => void;
+        }
+      | undefined;
 };
 
 type BottomTabsParamList = {
    [ROUTE_NAME.DASHBOARD]: Pick<ThemeScreepProps, 'fonts'> & {
-      inspiration?: Inspiration | Inspiration[];
+      inspiration?: Inspiration;
       onpress?: () => void;
    };
    [ROUTE_NAME.SETTINGS]: undefined;

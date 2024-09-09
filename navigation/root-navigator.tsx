@@ -13,6 +13,7 @@ import { ROUTE_NAME } from '../enums';
 import { useTheme } from '../hooks';
 import { AddInspiration } from '../screens';
 import { StyleSheet } from 'react-native';
+import { ThemeScreepProps } from '../types/props-styles.type';
 
 const preventAutoHide = () => {
    SplashScreen.preventAutoHideAsync();
@@ -28,8 +29,6 @@ const RootNavigator = () => {
       await SplashScreen.hideAsync();
    }, []);
 
-   const [cards, setCards] = useState<Inspiration[]>([] as Inspiration[]);
-
    preventAutoHide();
    if (!themeContext?.theme) {
       return null;
@@ -37,10 +36,13 @@ const RootNavigator = () => {
       onLayoutRootView();
    }
 
-   const fontPrimary = themeContext.fonts.LOBSTER_REGULAR.fontFamily;
-
    const themeColors = themeContext.theme;
    const themeFonts = themeContext.fonts;
+   const fontPrimary = themeFonts.LOBSTER_REGULAR.fontFamily;
+
+   // const themeProps: ThemeScreepProps = themeContext;
+   // console.log(themeProps);
+
    const handleThemeChange = themeContext.toggleTheme;
 
    const screenStyles = StyleSheet.create({
@@ -58,9 +60,9 @@ const RootNavigator = () => {
       }
    });
 
-   const themeStyleProps = StyleSheet.create({
+   const themeStyleProps = {
       fonts: themeFonts
-   });
+   };
 
    return (
       <>
@@ -81,26 +83,18 @@ const RootNavigator = () => {
                         theme={themeColors}
                         toggleTheme={handleThemeChange}
                         headerPropsStyles={screenStyles}
-                        inspirationCards={cards}
                      />
                   )}
                </RootStack.Screen>
 
                <RootStack.Screen
                   name={ROUTE_NAME.ADD_INSPIRATION}
-                  initialParams={{
-                     ...themeStyleProps,
-                     onpress: (card: Inspiration) => {
-                        const cardsArray = [...cards, card];
-                        setCards(cardsArray);
-                     }
-                  }}
                   options={{
                      headerTintColor: themeColors.PRIMARY,
                      ...screenStyles.headerStyle
                   }}
                >
-                  {(props) => <AddInspiration {...props} colors={themeColors} />}
+                  {(props) => <AddInspiration {...props} colors={themeColors} fonts={themeFonts} />}
                </RootStack.Screen>
             </RootStack.Navigator>
          </NavigationContainer>

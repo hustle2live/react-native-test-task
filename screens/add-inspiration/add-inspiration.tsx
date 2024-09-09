@@ -15,17 +15,13 @@ import { RootStackParamList } from '../../types/navigation.type';
 import { ScreenBackground } from '../screen-background/screen-background';
 import { ThemeScreepProps } from '../../types/props-styles.type';
 import { COLORS_LIGHT } from '../../constants';
-
 import { launchCamera, pickImage } from '../../services/localImagePicker';
 import { getRandomImage } from '../../services/getRandomImage';
 import { GetImageResponseDto, GetQuoteResponseDto } from '../../types';
-import { Loader } from '../../loader/loader';
 import { getRandomQuote } from '../../services/getRandomQuote';
-import { InspirationStore } from '../../store/inspirations';
-import { ROUTE_NAME } from '../../enums';
 import { InspirationCard } from '../../components/inspiration-card/inspiration-card';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & Partial<ThemeScreepProps>;
+type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & ThemeScreepProps;
 
 const handlePickImage = async (
    imagePickMethod: () => Promise<GetImageResponseDto>,
@@ -73,8 +69,8 @@ const showAlert = (setImageHandler: (e: GetImageResponseDto) => void) =>
       { cancelable: true }
    );
 
-const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) => {
-   const themeFonts = route?.params?.fonts;
+const AddInspiration: React.FC<Props> = ({ navigation, route, colors, fonts }: Props) => {
+   const themeFonts = fonts;
    const noImageBlueprint = require('../../assets/no-image.jpg');
 
    const [text, setText] = useState<string>('');
@@ -122,12 +118,6 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
 
    const createCard = () => {
       return { quote: text, image_url: image?.download_url };
-   };
-
-   const handleCreateinspiration = () => {
-      const newCard = createCard();
-      InspirationStore.add(newCard);
-      navigation.navigate(ROUTE_NAME.BOTTOM_TABS_NAVIGATOR);
    };
 
    return (
@@ -193,7 +183,10 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors }: Props) =
             style={{ ...buttonStyles.primary, ...buttonStyles.filled, opacity: isNotValid ? 0.5 : 1 }}
             disabled={isNotValid}
             onPress={() => {
-               handleCreateinspiration();
+               navigation.navigate('BottomTabsNavigator', {
+                  screen: 'Dashboard',
+                  params: { inspiration: createCard(), fonts: themeFonts }
+               });
             }}
          >
             <Text style={{ ...buttonStyles.text, color: colors?.FONT_INVERSE }}>Save</Text>

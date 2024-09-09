@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, ImageBackground, Image, StyleSheet, Text, View } from 'react-native';
 import { BottomTabsScreenProps } from '../../types/navigation.type';
 import { ScreenBackground } from '../screen-background/screen-background';
 import { ThemeScreepProps } from '../../types/props-styles.type';
 
-import { InspirationStore } from '../../store/inspirations';
 import { Inspiration } from '../../types';
 import { InspirationCard } from '../../components/inspiration-card/inspiration-card';
 
@@ -21,15 +20,20 @@ const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
       }
    });
 
-   const inspirationsArray: Inspiration[] = InspirationStore.getAll();
+   const [inspirations, setInspirations] = useState<Inspiration[]>([]);
 
-   const inspirationParamsArray: Inspiration | Inspiration[] | undefined = route.params?.inspiration;
+   useEffect(() => {
+      const receivedInspiration = route.params?.inspiration;
+      if (route.params && receivedInspiration) {
+         setInspirations((prevInspirations): Inspiration[] => [...prevInspirations, receivedInspiration]);
+      }
+   }, [route.params?.inspiration]);
 
    return (
       <View style={styles.container}>
          <ScreenBackground />
          <View style={styles.container}>
-            {InspirationStore.isEmpty() ? (
+            {inspirations.length < 1 ? (
                <>
                   <ImageBackground
                      source={imageSource}
@@ -41,7 +45,7 @@ const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
             ) : (
                <FlatList
                   style={{ width: '100%' }}
-                  data={inspirationsArray}
+                  data={inspirations}
                   ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
                   renderItem={({ item }) => <InspirationCard colors={colors} fonts={fonts} item={item} />}
                />
