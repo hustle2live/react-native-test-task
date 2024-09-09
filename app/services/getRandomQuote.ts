@@ -5,10 +5,8 @@ import { GetQuoteResponseDto } from '../common/types';
 
 const getRandomQuote = async (): Promise<GetQuoteResponseDto> => {
    try {
-      const response = await axios.get<GetQuoteResponseDto>(API.QUOTE_URL, {
-         params: { lang: 'en', format: 'json', method: 'getQuote' },
-         headers: { 'Access-Control-Allow-Origin': '*' },
-         withCredentials: false
+      const response = await axios.get<GetQuoteResponseDto>(API.PROXY_URL + API.QUOTE_URL.slice(7), {
+         params: { lang: 'en', format: 'json', method: 'getQuote' }
       });
       return response.data;
    } catch (error) {

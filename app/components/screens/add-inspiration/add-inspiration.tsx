@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import {
    Text,
    TextInput,
@@ -19,7 +19,7 @@ import { GetImageResponseDto, GetQuoteResponseDto } from '../../../common/types'
 
 import { InspirationCard } from '../../inspiration-card/inspiration-card';
 
-import { launchCamera, pickImage } from '../../../services/localImagePicker';
+import { onDevice, onCamera } from '../../../services/localImagePicker';
 import { getRandomImage } from '../../../services/getRandomImage';
 import { getRandomQuote } from '../../../services/getRandomQuote';
 
@@ -99,12 +99,12 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors, fonts }: P
          [
             {
                text: 'Gallery',
-               onPress: () => handlePickImage(pickImage),
+               onPress: () => handlePickImage(onDevice),
                style: 'default'
             },
             {
                text: 'Camera',
-               onPress: () => handlePickImage(launchCamera),
+               onPress: () => handlePickImage(onCamera),
                style: 'destructive'
             },
             {
@@ -163,7 +163,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors, fonts }: P
             />
          </SafeAreaView>
 
-         <TouchableOpacity style={buttonStyles.primary} onPress={handleRequestQuote}>
+         <TouchableOpacity style={buttonStyles.primary} onPress={() => handleRequestQuote()}>
             <Text style={buttonStyles.text}>Get a Random Quote</Text>
          </TouchableOpacity>
 

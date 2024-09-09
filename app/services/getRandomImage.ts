@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { API } from '../common/enums';
 import { getRandomNumber } from '../helpers';
-import type { GetImageResponseDto } from '../common/types';
+import { GetImageResponseDto } from '../common/types';
 
 const ImageIdRange = {
    min: 1,

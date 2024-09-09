@@ -14,7 +14,7 @@ const resultedImageData = (image?: ImagePicker.ImagePickerAsset): GetImageRespon
    };
 };
 
-const pickImage = async (): Promise<GetImageResponseDto> => {
+const onDevice = async (): Promise<GetImageResponseDto> => {
    try {
       let result = await ImagePicker.launchImageLibraryAsync({
          mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -34,7 +34,7 @@ const pickImage = async (): Promise<GetImageResponseDto> => {
    }
 };
 
-const launchCamera = async (): Promise<GetImageResponseDto> => {
+const onCamera = async (): Promise<GetImageResponseDto> => {
    try {
       const result: ImagePickerResult = await ImagePicker.launchCameraAsync({
          mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -53,4 +53,4 @@ const launchCamera = async (): Promise<GetImageResponseDto> => {
    }
 };
 
-export { pickImage, launchCamera };
+export { onDevice, onCamera };
