@@ -1,12 +1,12 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { COLORS_LIGHT, COLORS_DARK, FONTS, ThemeMark, FontStyleType } from '../constants';
-import { ThemeContextProps } from '../types/props-styles.type';
+import { COLORS_LIGHT, COLORS_DARK, FONTS, ThemeMark, FontStyleType } from '../common/constants';
+import { ThemeContextProps } from '../common/types/props-styles.type';
 import { useFonts } from '../hooks/use-fonts';
 import { getLocalStorageTheme, saveStorageTheme } from '../services/themeStorageHandler';
 
-import { Loader } from '../loader/loader';
+import { Loader } from '../components/loader/loader';
 
 type ThemeType = typeof COLORS_LIGHT | typeof COLORS_DARK;
 

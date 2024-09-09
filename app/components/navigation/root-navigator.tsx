@@ -1,19 +1,17 @@
-import React, { useCallback, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
+import React, { useCallback } from 'react';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 
-import { BottomTabsNavigator } from './bottom-tabs-navigator';
-
-import { Inspiration, RootStackParamList } from '../types';
-import { ThemeContextProps } from '../contexts/theme-context';
-import { ROUTE_NAME } from '../enums';
-import { useTheme } from '../hooks';
+import { ROUTE_NAME } from '../../common/enums';
+import { RootStackParamList } from '../../common/types';
+import { ThemeContextProps } from '../../contexts/theme-context';
 import { AddInspiration } from '../screens';
-import { StyleSheet } from 'react-native';
-import { ThemeScreepProps } from '../types/props-styles.type';
+import { useTheme } from '../../hooks/use-theme';
+
+import { BottomTabsNavigator } from './bottom-tabs-navigator';
 
 const preventAutoHide = () => {
    SplashScreen.preventAutoHideAsync();
@@ -39,9 +37,6 @@ const RootNavigator = () => {
    const themeColors = themeContext.theme;
    const themeFonts = themeContext.fonts;
    const fontPrimary = themeFonts.LOBSTER_REGULAR.fontFamily;
-
-   // const themeProps: ThemeScreepProps = themeContext;
-   // console.log(themeProps);
 
    const handleThemeChange = themeContext.toggleTheme;
 

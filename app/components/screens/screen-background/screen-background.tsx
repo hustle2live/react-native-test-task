@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, ImageBackground } from 'react-native';
-import { useTheme } from '../../hooks';
+import { useTheme } from '../../../hooks/use-theme';
 
 const ScreenBackground = () => {
-   const imageSource = require('../../assets/leaf.png');
+   const imageSource = require('../../../assets/leaf.png');
 
    const theme = useTheme();
    const bgColor = theme?.theme.APP_BACKGROUND;
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
       padding: 20,
       paddingTop: 10,
       paddingBottom: 0,
-      margin: 0,
+      margin: 0
    },
    style: {
       maxHeight: '40%',

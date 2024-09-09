@@ -1,5 +1,5 @@
 import * as Font from 'expo-font';
-import { FONTS } from '../constants';
+import { FONTS } from '../common/constants';
 
 const useFonts = async (resolve: (e: boolean) => void, reject: (e: string) => void): Promise<void> => {
    try {

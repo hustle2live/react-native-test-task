@@ -1,6 +1,6 @@
 import { Image, Text, View } from 'react-native';
-import { Inspiration } from '../../types';
-import { ThemeScreepProps } from '../../types/props-styles.type';
+import { Inspiration } from '../../common/types';
+import { ThemeScreepProps } from '../../common/types/props-styles.type';
 
 type Props = Partial<ThemeScreepProps> & { item: Inspiration };
 

@@ -9,17 +9,21 @@ import {
    StyleSheet,
    Alert
 } from 'react-native';
+
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { RootStackParamList } from '../../types/navigation.type';
+import { COLORS_LIGHT } from '../../../common/constants';
+import { RootStackParamList } from '../../../common/types/navigation.type';
+import { ThemeScreepProps } from '../../../common/types/props-styles.type';
+import { GetImageResponseDto, GetQuoteResponseDto } from '../../../common/types';
+
+import { InspirationCard } from '../../inspiration-card/inspiration-card';
+
+import { launchCamera, pickImage } from '../../../services/localImagePicker';
+import { getRandomImage } from '../../../services/getRandomImage';
+import { getRandomQuote } from '../../../services/getRandomQuote';
+
 import { ScreenBackground } from '../screen-background/screen-background';
-import { ThemeScreepProps } from '../../types/props-styles.type';
-import { COLORS_LIGHT } from '../../constants';
-import { launchCamera, pickImage } from '../../services/localImagePicker';
-import { getRandomImage } from '../../services/getRandomImage';
-import { GetImageResponseDto, GetQuoteResponseDto } from '../../types';
-import { getRandomQuote } from '../../services/getRandomQuote';
-import { InspirationCard } from '../../components/inspiration-card/inspiration-card';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & ThemeScreepProps;
 
@@ -71,7 +75,7 @@ const showAlert = (setImageHandler: (e: GetImageResponseDto) => void) =>
 
 const AddInspiration: React.FC<Props> = ({ navigation, route, colors, fonts }: Props) => {
    const themeFonts = fonts;
-   const noImageBlueprint = require('../../assets/no-image.jpg');
+   const noImageBlueprint = require('../../../assets/no-image.jpg');
 
    const [text, setText] = useState<string>('');
    const [image, setImage] = useState<GetImageResponseDto | null>(null);

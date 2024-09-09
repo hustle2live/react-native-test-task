@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { type ThemeScreepProps } from '../../types/props-styles.type';
-import { COLORS_LIGHT } from '../../constants';
+import { type ThemeScreepProps } from '../../../common/types/props-styles.type';
+import { COLORS_LIGHT } from '../../../common/constants';
 
 import { ScreenBackground } from '../screen-background/screen-background';
 

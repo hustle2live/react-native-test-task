@@ -1,14 +1,14 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import { Dashboard, Settings } from '../screens';
 import { Ionicons } from '@expo/vector-icons';
-import { ROUTE_NAME } from '../enums';
-import { BottomTabsParamList, Inspiration, RootStackScreenProps } from '../types';
-import { ThemeContextProps } from '../types/props-styles.type';
+
+import { ROUTE_NAME } from '../../common/enums';
+import { BottomTabsParamList, RootStackScreenProps } from '../../common/types';
+import { ThemeContextProps } from '../../common/types/props-styles.type';
+import { Dashboard, Settings } from '../screens';
+
 import { TabButton } from './button-tab';
-import { RootNavigator } from './root-navigator';
 
 const Tabs = createBottomTabNavigator<BottomTabsParamList>();
 

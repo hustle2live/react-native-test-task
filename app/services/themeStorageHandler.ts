@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ThemeMark } from '../constants';
+import { ThemeMark } from '../common/constants';
 
 const getLocalStorageTheme = async (): Promise<keyof typeof ThemeMark | null> => {
    const result = await AsyncStorage.getItem('theme');

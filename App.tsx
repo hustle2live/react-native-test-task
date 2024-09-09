@@ -2,8 +2,8 @@ import React from 'react';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { RootNavigator } from './navigation';
-import { ThemeProvider } from './contexts';
+import { RootNavigator } from './app/components/navigation';
+import { ThemeProvider } from './app/contexts';
 
 export default function App() {
    return (

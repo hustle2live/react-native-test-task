@@ -2,7 +2,7 @@ import * as ImagePicker from 'expo-image-picker';
 import uuid from 'react-native-uuid';
 
 import { ImagePickerResult } from 'expo-image-picker';
-import { GetImageResponseDto } from '../types';
+import { GetImageResponseDto } from '../common/types';
 
 const resultedImageData = (image?: ImagePicker.ImagePickerAsset): GetImageResponseDto => {
    if (!image) return { id: '0', download_url: '' };

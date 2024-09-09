@@ -4,10 +4,10 @@
     "slug": "rn-lecture-base",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/coffee_cup-croped.png",
+    "icon": "./app/assets/coffee_cup-croped.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash-2copy.png",
+      "image": "./app/assets/splash-2copy.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -16,13 +16,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/coffee_cup-croped.png",
+        "foregroundImage": "./app/assets/coffee_cup-croped.png",
         "backgroundColor": "#c1c1c1"
       },
       "package": "com.hustle2live.rnlecturebase"
     },
     "web": {
-      "favicon": "./assets/coffee_cup-croped.png",
+      "favicon": "./app/assets/coffee_cup-croped.png",
       "bundler": "metro"
     },
     "plugins": [

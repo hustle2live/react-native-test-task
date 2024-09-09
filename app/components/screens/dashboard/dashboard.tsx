@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, ImageBackground, Image, StyleSheet, Text, View } from 'react-native';
-import { BottomTabsScreenProps } from '../../types/navigation.type';
+import { FlatList, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { BottomTabsScreenProps } from '../../../common/types/navigation.type';
 import { ScreenBackground } from '../screen-background/screen-background';
-import { ThemeScreepProps } from '../../types/props-styles.type';
+import { ThemeScreepProps } from '../../../common/types/props-styles.type';
 
-import { Inspiration } from '../../types';
-import { InspirationCard } from '../../components/inspiration-card/inspiration-card';
+import { Inspiration } from '../../../common/types';
+import { InspirationCard } from '../../inspiration-card/inspiration-card';
+
+
 
 type Props = BottomTabsScreenProps<'Dashboard'> & Partial<ThemeScreepProps>;
 
 const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
-   const imageSource = require('../../assets/empty-placeholder.png');
+   const imageSource = require('../../../assets/empty-placeholder.png');
    const fonts = route.params.fonts;
    const themeStyles = StyleSheet.create({
       textStyles: {

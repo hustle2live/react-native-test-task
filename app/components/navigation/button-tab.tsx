@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { FontStyleType } from '../contexts/theme-context';
+import { FontStyleType } from '../../contexts/theme-context';
 
 type TProps = {
    props: {

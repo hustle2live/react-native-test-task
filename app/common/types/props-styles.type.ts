@@ -1,4 +1,4 @@
-import { FontStyleType, ThemeType } from '../contexts/theme-context';
+import { FontStyleType, ThemeType } from '../../contexts/theme-context';
 
 interface ThemeContextProps {
    theme: ThemeType;

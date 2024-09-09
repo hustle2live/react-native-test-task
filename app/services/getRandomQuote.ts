@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import { API } from '../enums';
-import { GetQuoteResponseDto } from '../types';
+import { API } from '../common/enums';
+import { GetQuoteResponseDto } from '../common/types';
 
 const getRandomQuote = async (): Promise<GetQuoteResponseDto> => {
    try {
