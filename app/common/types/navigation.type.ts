@@ -10,11 +10,7 @@ type NavigationRoute = (typeof ROUTE_NAME)[keyof typeof ROUTE_NAME];
 
 type RootStackParamList = {
    [ROUTE_NAME.BOTTOM_TABS_NAVIGATOR]: NavigatorScreenParams<BottomTabsParamList> & Partial<ThemeScreepProps>;
-   [ROUTE_NAME.ADD_INSPIRATION]:
-      | {
-           onpress?: () => void;
-        }
-      | undefined;
+   [ROUTE_NAME.ADD_INSPIRATION]: { onpress?: () => void } | undefined;
 };
 
 type BottomTabsParamList = {
@@ -32,23 +28,6 @@ declare global {
    }
 }
 
-type AddInspirationProps = NativeStackScreenProps<AddInspirationParamList, 'AddInspiration'>;
-
-type AddInspirationParamList = {
-   [ROUTE_NAME.BOTTOM_TABS_NAVIGATOR]: undefined;
-   [ROUTE_NAME.ADD_INSPIRATION]: undefined;
-};
-
-type DashboardParamList = {
-   [ROUTE_NAME.ADD_INSPIRATION]: undefined;
-   [ROUTE_NAME.DASHBOARD]: undefined;
-};
-
-type AddInspirationScreenProps<T extends keyof AddInspirationParamList> = NativeStackScreenProps<
-   AddInspirationParamList,
-   T
->;
-
 type RootStackScreenProps<T extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, T>;
 
 type BottomTabsScreenProps<T extends keyof BottomTabsParamList> = CompositeScreenProps<
@@ -56,14 +35,4 @@ type BottomTabsScreenProps<T extends keyof BottomTabsParamList> = CompositeScree
    NativeStackScreenProps<RootStackParamList, typeof ROUTE_NAME.BOTTOM_TABS_NAVIGATOR>
 >;
 
-export type {
-   NavigationRoute,
-   RootStackParamList,
-   BottomTabsParamList,
-   RootStackScreenProps,
-   BottomTabsScreenProps,
-   AddInspirationProps,
-   AddInspirationParamList,
-   AddInspirationScreenProps,
-   DashboardParamList
-};
+export type { NavigationRoute, RootStackParamList, BottomTabsParamList, RootStackScreenProps, BottomTabsScreenProps };
