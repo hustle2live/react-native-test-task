@@ -1,16 +1,17 @@
 import { Image, Text, View } from 'react-native';
 import { Inspiration } from '../../common/types';
 import { ThemeScreepProps } from '../../common/types/props-styles.type';
+import React from 'react';
 
 type Props = Partial<ThemeScreepProps> & { item: Inspiration };
 
-const InspirationCard = ({ colors, fonts, item }: Props) => {
+const InspirationCard: React.FC<Props> = ({ colors, fonts, item }: Props) => {
    return (
       <View
          style={{
             minWidth: '100%',
             width: '100%',
-            height: 200,
+            height: 220,
             backgroundColor: colors?.APP_BACKGROUND,
             justifyContent: 'center',
             position: 'relative'

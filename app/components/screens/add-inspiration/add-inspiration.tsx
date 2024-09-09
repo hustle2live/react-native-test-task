@@ -27,7 +27,7 @@ import { ScreenBackground } from '../screen-background/screen-background';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AddInspiration'> & ThemeScreepProps;
 
-const AddInspiration: React.FC<Props> = ({ navigation, route, colors, fonts }: Props) => {
+const AddInspiration: React.FC<Props> = ({ navigation, colors, fonts }: Props) => {
    const themeFonts = fonts;
    const noImageBlueprint = require('../../../assets/no-image.jpg');
 
@@ -123,7 +123,7 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors, fonts }: P
          {!image ? (
             <ImageBackground
                source={imageSource}
-               style={{ width: 'auto', height: 200 }}
+               style={{ width: 'auto', height: 220 }}
                imageStyle={{ width: 'auto', height: '100%', objectFit: 'fill', borderRadius: 10, cursor: 'pointer' }}
             ></ImageBackground>
          ) : (
@@ -150,7 +150,6 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors, fonts }: P
                <Text style={buttonStyles.text}>Get a Random Image</Text>
             </TouchableOpacity>
          </View>
-
          <SafeAreaView>
             <TextInput
                style={{ ...buttonStyles.primary, ...stylesInput.textArea }}
@@ -162,11 +161,9 @@ const AddInspiration: React.FC<Props> = ({ navigation, route, colors, fonts }: P
                value={text}
             />
          </SafeAreaView>
-
          <TouchableOpacity style={buttonStyles.primary} onPress={() => handleRequestQuote()}>
             <Text style={buttonStyles.text}>Get a Random Quote</Text>
          </TouchableOpacity>
-
          <TouchableOpacity
             style={{ ...buttonStyles.primary, ...buttonStyles.filled, opacity: isNotValid ? 0.5 : 1 }}
             disabled={isNotValid}
