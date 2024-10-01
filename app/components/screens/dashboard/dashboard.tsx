@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, ImageBackground, StyleSheet, Text, View } from 'react-native';
-import { BottomTabsScreenProps } from '../../../common/types/navigation.type';
-import { ScreenBackground } from '../screen-background/screen-background';
-import { ThemeScreepProps } from '../../../common/types/props-styles.type';
 
+import { ScreenBackground } from '../screen-background/screen-background';
+
+import { BottomTabsScreenProps } from '../../../common/types/navigation.type';
+import { ThemeScreepProps } from '../../../common/types/props-styles.type';
 import { Inspiration } from '../../../common/types';
+
 import { InspirationCard } from '../../inspiration-card/inspiration-card';
 
+type Props = BottomTabsScreenProps<'Dashboard'> &
+   Partial<ThemeScreepProps> & {
+      initialCards: Inspiration[];
+      saveCards: (cards: Inspiration[]) => Promise<void>;
+   };
 
-
-type Props = BottomTabsScreenProps<'Dashboard'> & Partial<ThemeScreepProps>;
-
-const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
+const Dashboard: React.FC<Props> = ({ route, colors, initialCards, saveCards }: Props) => {
    const imageSource = require('../../../assets/empty-placeholder.png');
    const fonts = route.params.fonts;
+
    const themeStyles = StyleSheet.create({
       textStyles: {
          fontFamily: fonts.LOBSTER_ITALIC.fontFamily,
@@ -22,12 +27,24 @@ const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
       }
    });
 
-   const [inspirations, setInspirations] = useState<Inspiration[]>([]);
+   console.log('initialCards :', initialCards);
+
+   const [inspirations, setInspirations] = useState<Inspiration[]>(initialCards);
+
+   useEffect(() => {
+      if (initialCards && initialCards?.length) {
+         setInspirations(initialCards);
+      }
+   }, [initialCards]);
 
    useEffect(() => {
       const receivedInspiration = route.params?.inspiration;
       if (route.params && receivedInspiration) {
-         setInspirations((prevInspirations): Inspiration[] => [...prevInspirations, receivedInspiration]);
+         setInspirations((prevInspirations): Inspiration[] => {
+            const newInspirationArray = [...prevInspirations, receivedInspiration];
+            saveCards(newInspirationArray);
+            return newInspirationArray;
+         });
       }
    }, [route.params?.inspiration]);
 
@@ -48,6 +65,8 @@ const Dashboard: React.FC<Props> = ({ navigation, route, colors }: Props) => {
                <FlatList
                   style={{ width: '100%' }}
                   data={inspirations}
+                  showsVerticalScrollIndicator={false}
+                  showsHorizontalScrollIndicator={false}
                   ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
                   renderItem={({ item }) => <InspirationCard colors={colors} fonts={fonts} item={item} />}
                />

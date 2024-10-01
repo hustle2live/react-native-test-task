@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 import { ROUTE_NAME } from '../../common/enums';
-import { BottomTabsParamList, RootStackScreenProps } from '../../common/types';
+import { BottomTabsParamList, Inspiration, RootStackScreenProps } from '../../common/types';
 import { ThemeContextProps } from '../../common/types/props-styles.type';
 import { Dashboard, Settings } from '../screens';
+
+import { getStorageInspirationCards, saveStorageInspirationCards } from '../../services/cardsStorageHandler';
 
 import { TabButton } from './button-tab';
 
@@ -35,6 +37,24 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
    const secondaryColor = colors?.SECONDARY;
    const LobsterRegular = themeFonts?.LOBSTER_REGULAR.fontFamily;
 
+   const [storageCards, setStorageCards] = useState<Inspiration[]>([]);
+
+   const writeStorageCards = useCallback(async (cards: Inspiration[]): Promise<void> => {
+      await saveStorageInspirationCards(cards);
+   }, []);
+
+   useEffect(() => {
+      const findStorageCards = async () => {
+         const getCards = await getStorageInspirationCards();
+         if (getCards) {
+            setStorageCards(getCards);
+         }
+      };
+
+      findStorageCards();
+   }, []);
+
+   console.log('storageCards 3 ', storageCards);
    return (
       <Tabs.Navigator
          screenOptions={{
@@ -72,7 +92,9 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
                ...headerPropsStyles
             }}
          >
-            {(props) => <Dashboard {...props} colors={colors} />}
+            {(props) => (
+               <Dashboard {...props} colors={colors} initialCards={storageCards} saveCards={writeStorageCards} />
+            )}
          </Tabs.Screen>
 
          <Tabs.Screen
