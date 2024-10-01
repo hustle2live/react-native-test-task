@@ -1,3 +1,4 @@
+import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { Inspiration } from '../../common/types';
 import { ThemeScreepProps } from '../../common/types/props-styles.type';
