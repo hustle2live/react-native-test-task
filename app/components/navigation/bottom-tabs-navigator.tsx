@@ -54,7 +54,6 @@ const BottomTabsNavigator: React.FC<NavProps> = ({
       findStorageCards();
    }, []);
 
-   console.log('storageCards 3 ', storageCards);
    return (
       <Tabs.Navigator
          screenOptions={{

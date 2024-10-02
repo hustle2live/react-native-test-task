@@ -27,7 +27,6 @@ const Dashboard: React.FC<Props> = ({ route, colors, initialCards, saveCards }: 
       }
    });
 
-   console.log('initialCards :', initialCards);
 
    const [inspirations, setInspirations] = useState<Inspiration[]>(initialCards);
 
