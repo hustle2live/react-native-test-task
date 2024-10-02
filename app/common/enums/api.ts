@@ -1,6 +1,8 @@
 const API = {
+   GET_QOUTE_PATH: '/api/get-qoute',
+   GH_SERVER_URL: 'https://express-rbm1.onrender.com',
    PROXY_URL: 'https://cors-anywhere.herokuapp.com/',
-   QUOTE_URL: 'http://api.forismatic.com/api/1.0/',
+   QUOTE_URL: 'https://api.forismatic.com/api/1.0/',
    IMAGE_URL: 'https://picsum.photos'
 } as const;
 
