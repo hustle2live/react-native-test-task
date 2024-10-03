@@ -19,13 +19,15 @@ const createUrl = (platform: string): TParams => {
       case 'ios':
       case 'android':
          ApiURL = defaultUrlPath;
-         ApiParams = { lang: 'en', format: 'json', method: 'getQuote' };
+         ApiParams = {
+            params: { lang: 'en', format: 'json', method: 'getQuote' }
+         };
          break;
       case 'windows':
       case 'web':
       default:
          ApiURL = webUrlPath;
-         ApiParams = '';
+         ApiParams = {};
    }
 
    return { reqUrl: ApiURL, reqParams: ApiParams };
