@@ -43,9 +43,9 @@ const RootNavigator = () => {
    const screenStyles = StyleSheet.create({
       headerStyle: {
          backgroundColor: themeColors.APP_BACKGROUND,
-         minHeight: 60,
-         maxHeight: 60,
-         height: 60,
+         // minHeight: 60,
+         // maxHeight: 60,
+         // height: 60,
          shadowColor: '#000',
          shadowOffset: { width: 0, height: 1 },
          shadowOpacity: 0.8,

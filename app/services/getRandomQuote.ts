@@ -8,7 +8,7 @@ type TParams = {
    reqParams: { params: { lang: string; format: string; method: string } } | {};
 };
 
-const createUrl = (platform = ''): TParams => {
+const createUrl = (platform: string): TParams => {
    const defaultUrlPath = API.QUOTE_URL;
    const webUrlPath = API.GH_SERVER_URL.concat(API.GET_QOUTE_PATH);
 
