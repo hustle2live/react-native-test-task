@@ -20,8 +20,8 @@ export default function App() {
 
 const screenStyles = StyleSheet.create({
    content: {
-      maxWidth: 425,
-      maxHeight: 915,
+      maxWidth: 460,
+      maxHeight: 920,
       margin: 'auto',
       width: '100%',
       height: '100%',
