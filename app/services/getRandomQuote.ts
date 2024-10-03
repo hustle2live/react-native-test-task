@@ -22,6 +22,7 @@ const createUrl = (platform = ''): TParams => {
          ApiParams = { lang: 'en', format: 'json', method: 'getQuote' };
          break;
       case 'windows':
+      case 'web':
       default:
          ApiURL = webUrlPath;
          ApiParams = '';
