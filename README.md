@@ -2,9 +2,9 @@
 
 This is a React Native Test Assigment implemented (from starter) for a personal development.
 
-Watch [Web Demo link ](https://hustle2live.github.io/react-native-test-task/)
+Watch [Web Demo link ](https://hustle2live.github.io/react-native-test-task/ target="_blank")
 
-, or [Expo Link ](https://github.com/hustle2live/react-native-test-task?tab=readme-ov-file)
+, or [Expo Link ]( https://snack.expo.dev/@hustle2live/github_hustle2live_react-native-test-task/ target="_blank")
 
 #### In this task Implemented:
 -  Theme context
